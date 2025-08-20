@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Cotizador Venecitas Neobind</title>
+<style>
+body {
+    font-family: Arial, sans-serif;
+    background: #f2f2f2;
+    margin: 0;
+    padding: 0;
+}
+.contenedor {
+    max-width: 600px;
+    margin: 2rem auto;
+    background: #fff;
+    padding: 2rem;
+    border-radius: 12px;
+    box-shadow: 0 0 15px rgba(0,0,0,0.1);
+}
+h2 {
+    text-align: center;
+    color: #28a745;
+}
+#logo {
+    display: block;
+    margin: 0 auto 20px auto;
+    max-width: 200px;
+}
+input, button {
+    width: 100%;
+    padding: 12px;
+    font-size: 1rem;
+    margin: 1rem 0;
+    border-radius: 6px;
+    border: 1px solid #ccc;
+}
+button {
+    background-color: #28a745;
+    color: #fff;
+    border: none;
+    cursor: pointer;
+    font-size: 1.1rem;
+}
+button:hover {
+    background-color: #218838;
+}
+#mensaje {
+    background: #f9f9f9;
+    padding: 1rem;
+    border-radius: 8px;
+    margin-top: 1rem;
+    white-space: pre-wrap;
+}
+</style>
+</head>
+<body>
+<div class="contenedor">
+    <img id="logo" src="https://www.neobind.com/wp-content/uploads/2025/08/logo-neobind.png" alt="Neobind">
+    <h2>💎 Cotizá tu pileta Venecitas Neobind 💎</h2>
+    <p>Ingresá los m² de tu pileta para recibir el presupuesto directo en WhatsApp.</p>
+    <input type="number" id="m2Input" placeholder="Ej: 55" min="1">
+    <button onclick="generarMensaje()">📲 Generar mensaje para WhatsApp</button>
+    <div id="mensaje"></div>
+</div>
+
+<script>
+function generarMensaje() {
+    const m2Real = Math.ceil(document.getElementById('m2Input').value);
+    if(!m2Real || m2Real <= 0){ alert("Por favor ingresá un valor válido"); return; }
+
+    const m2 = m2Real;
+
+    // Venecitas
+    const precioRegularVenecitas = m2 * 18870;
+    const cuotaVenecitas = Math.round(precioRegularVenecitas / 6);
+    const precioTransfVenecitas = m2 * 16980;
+
+    // Materiales
+    const bolsasCemenpoxTarjeta = Math.ceil(m2/6);
+    const bolsasCementoTarjeta = Math.ceil(m2/25);
+    const totalCemenpoxTarjeta = bolsasCemenpoxTarjeta*36700;
+    const totalCementoTarjeta = bolsasCementoTarjeta*35550;
+    const totalMaterialesTarjeta = totalCemenpoxTarjeta + totalCementoTarjeta;
+    const cuotaMaterialesTarjeta = Math.round(totalMaterialesTarjeta/6);
+
+    const bolsasCemenpoxTransf = bolsasCemenpoxTarjeta;
+    const bolsasCementoTransf = bolsasCementoTarjeta;
+    const totalCemenpoxTransf = bolsasCemenpoxTransf*33000;
+    const totalCementoTransf = bolsasCementoTransf*32000;
+    const totalMaterialesTransf = totalCemenpoxTransf + totalCementoTransf;
+
+    // Totales
+    const totalTarjeta = precioRegularVenecitas + totalMaterialesTarjeta;
+    const totalTransf = precioTransfVenecitas + totalMaterialesTransf;
+    const cuotaTotalTarjeta = Math.round(totalTarjeta/6);
+
+    function formato(num){ return num.toString().replace(/\B(?=(\d{3})+(?!\d))/g,"."); }
+
+    // Mensaje
+    let mensaje = `🏊‍♂️ Presupuesto Neobind 🏊‍♀️
+📐 Superficie: ${m2} m²
+
+💎 Venecitas:
+💳 Tarjeta (6 cuotas sin interés): 💲${formato(precioRegularVenecitas)} (6 × 💵${formato(cuotaVenecitas)})
+🏦 Transferencia/depósito (10% OFF): 💲${formato(precioTransfVenecitas)}
+🚚 Por este mes las Venecitas Neobind tienen ENVÍO GRATIS a retirar en la sucursal del expreso en destino ✨
+
+🛠 Materiales:
+💳 Tarjeta (6 cuotas sin interés): ${bolsasCemenpoxTarjeta} Cemenpox + ${bolsasCementoTarjeta} Cemento Blanco — 💲${formato(totalMaterialesTarjeta)}
+🏦 Transferencia/depósito (10% OFF): ${bolsasCemenpoxTransf} Cemenpox + ${bolsasCementoTransf} Cemento Blanco — 💲${formato(totalMaterialesTransf)}
+
+💡 Totales Venecitas + Materiales:
+💳 Tarjeta (6 cuotas sin interés): 💲${formato(totalTarjeta)} (6 × 💵${formato(cuotaTotalTarjeta)})
+🏦 Transferencia/depósito (10% OFF): 💲${formato(totalTransf)}
+
+📦 El envío de los materiales de colocación es con cargo, ya que deben ser palletizados. Este estará sujeto a verificación previa según la localidad de destino.`;
+
+    document.getElementById("mensaje").innerText = mensaje;
+
+    // WhatsApp
+    const numeroWhatsApp = "5493425945666";
+    const url = `https://wa.me/${numeroWhatsApp}?text=${encodeURIComponent(mensaje)}`;
+    window.open(url, '_blank');
+}
+</script>
+
+</body>
+</html>
