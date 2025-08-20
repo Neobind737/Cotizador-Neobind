@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Cotizador Venecitas Neobind</title>
+<style>
+  body { font-family: Arial, sans-serif; background:#f2f2f2; margin:0; padding:0; }
+  .container { max-width: 500px; margin: 2rem auto; background:#fff; padding:2rem; border-radius:12px; box-shadow:0 0 15px rgba(0,0,0,0.1);}
+  h2 { text-align:center; color:#28a745; }
+  input, button { width:100%; padding:12px; font-size:1rem; margin:0.5rem 0; border-radius:6px; border:1px solid #ccc;}
+  button { background:#28a745; color:#fff; border:none; cursor:pointer; }
+  button:hover { background:#218838; }
+</style>
+</head>
+<body>
+<div class="container">
+  <h2>💎 Cotizá tu pileta Neobind 💎</h2>
+  <input type="number" id="m2Input" placeholder="Ej: 55" min="1">
+  <button onclick="generarMensaje()">📲 Generar mensaje para WhatsApp</button>
+</div>
+
+<script>
+function generarMensaje() {
+  const m2 = Math.ceil(document.getElementById('m2Input').value);
+  if (!m2 || m2 <= 0) { alert("Por favor ingresá un valor válido"); return; }
+
+  // Venecitas
+  const precioVenecitasTarjeta = m2 * 18870;
+  const cuotaVenecitas = Math.round(precioVenecitasTarjeta / 6);
+  const precioVenecitasTransf = m2 * 16980;
+
+  // Materiales
+  const bolsasCemenpox = Math.ceil(m2/6);
+  const bolsasCemento = Math.ceil(m2/25);
+
+  const totalCemenpoxTarjeta = bolsasCemenpox * 36700;
+  const totalCementoTarjeta = bolsasCemento * 35550;
+  const totalMaterialesTarjeta = totalCemenpoxTarjeta + totalCementoTarjeta;
+  const cuotaMaterialesTarjeta = Math.round(totalMaterialesTarjeta / 6);
+
+  const totalCemenpoxTransf = bolsasCemenpox * 33000;
+  const totalCementoTransf = bolsasCemento * 32000;
+  const totalMaterialesTransf = totalCemenpoxTransf + totalCementoTransf;
+
+  const totalTarjeta = precioVenecitasTarjeta + totalMaterialesTarjeta;
+  const totalTransf = precioVenecitasTransf + totalMaterialesTransf;
+  const cuotaTotalTarjeta = Math.round(totalTarjeta / 6);
+
+  function formato(num) { return num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, "."); }
+
+  const mensaje = `🏊‍♂️ Presupuesto Neobind 🏊‍♀️
+📐 Superficie: ${m2} m²
+
+💎 Venecitas:
+💳 Tarjeta (6 cuotas sin interés): 💲${formato(precioVenecitasTarjeta)} (6 × 💵${formato(cuotaVenecitas)})
+🏦 Transferencia/depósito (10% OFF): 💲${formato(precioVenecitasTransf)}
+🚚 ENVÍO GRATIS a retirar en la sucursal del expreso en destino ✨
+
+🛠 Materiales:
+💳 Tarjeta: ${bolsasCemenpox} Cemenpox + ${bolsasCemento} Cemento Blanco — 💲${formato(totalMaterialesTarjeta)}
+🏦 Transferencia: ${bolsasCemenpox} Cemenpox + ${bolsasCemento} Cemento Blanco — 💲${formato(totalMaterialesTransf)}
+
+💡 Totales Venecitas + Materiales:
+💳 Tarjeta: 💲${formato(totalTarjeta)} (6 × 💵${formato(cuotaTotalTarjeta)})
+🏦 Transferencia: 💲${formato(totalTransf)}
+
+📦 El envío de los materiales de colocación es con cargo, ya que deben ser palletizados. Sujeto a verificación según la localidad de destino.`;
+
+  const numeroWhatsApp = "549XXXXXXXXXX"; // reemplazar con tu número
+  const url = `https://wa.me/${numeroWhatsApp}?text=${encodeURIComponent(mensaje)}`;
+  window.open(url, '_blank');
+}
+</script>
+</body>
+</html>
