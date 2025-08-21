@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Cotizador Venecitas Neobind</title>
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        background: #f2f2f2;
+        margin: 0;
+        padding: 0;
+    }
+    .container {
+        max-width: 600px;
+        margin: 2rem auto;
+        background: #fff;
+        padding: 2rem;
+        border-radius: 12px;
+        box-shadow: 0 0 15px rgba(0,0,0,0.1);
+    }
+    h2 {
+        text-align: center;
+        color: #28a745;
+    }
+    input {
+        width: 100%;
+        padding: 12px;
+        font-size: 1rem;
+        margin: 1rem 0;
+        border-radius: 6px;
+        border: 1px solid #ccc;
+    }
+    button {
+        width: 100%;
+        padding: 14px;
+        font-size: 1.1rem;
+        border-radius: 6px;
+        border: none;
+        background: #28a745;
+        color: #fff;
+        cursor: pointer;
+        margin-top: 1rem;
+    }
+    button:hover {
+        background: #218838;
+    }
+    .budget {
+        margin-top: 2rem;
+        background: #e9f8f1;
+        padding: 1rem 1.5rem;
+        border-radius: 10px;
+        white-space: pre-line;
+        font-size: 0.95rem;
+    }
+</style>
+</head>
+<body>
+
+<div class="container">
+    <h2>💎 Cotizá tu pileta Venecitas Neobind 💎</h2>
+    <p>Ingresá los m² de tu pileta para ver el presupuesto:</p>
+
+    <input type="number" id="m2Input" placeholder="Ej: 55" min="1">
+    <button onclick="generarPresupuesto()">📊 Calcular presupuesto</button>
+
+    <div id="budgetOutput" class="budget" style="display:none;"></div>
+    <button id="whatsappBtn" style="display:none; margin-top:1rem;">📲 Enviar por WhatsApp</button>
+</div>
+
+<script>
+function generarPresupuesto() {
+    const m2Input = document.getElementById('m2Input').value;
+    const m2 = Math.ceil(parseFloat(m2Input));
+
+    if(!m2 || m2 <= 0) {
+        alert("Por favor ingresá un valor válido");
+        return;
+    }
+
+    // Precios Venecitas
+    const precioRegularVenecitas = m2 * 18870;
+    const cuotaVenecitas = Math.round(precioRegularVenecitas / 6);
+    const precioTransfVenecitas = m2 * 16980;
+
+    // Materiales
+    const bolsasCemenpox = Math.ceil(m2 / 6);
+    const bolsasCemento = Math.ceil(m2 / 25);
+
+    // Materiales - Precios
+    const totalCemenpoxTarjeta = bolsasCemenpox * 36700;
+    const totalCementoTarjeta = bolsasCemento * 35550;
+    const totalMaterialesTarjeta = totalCemenpoxTarjeta + totalCementoTarjeta;
+    const cuotaMaterialesTarjeta = Math.round(totalMaterialesTarjeta / 6);
+
+    const totalCemenpoxTransf = bolsasCemenpox * 33000;
+    const totalCementoTransf = bolsasCemento * 32000;
+    const totalMaterialesTransf = totalCemenpoxTransf + totalCementoTransf;
+
+    // Totales
+    const totalTarjeta = precioRegularVenecitas + totalMaterialesTarjeta;
+    const cuotaTotalTarjeta = Math.round(totalTarjeta / 6);
+    const totalTransf = precioTransfVenecitas + totalMaterialesTransf;
+
+    // Formato con puntos
+    const formato = num => num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
+
+    // Mensaje
+    const mensaje = `
+🏊‍♂️ Presupuesto Neobind 🏊‍♀️
+📐 Superficie: ${m2} m²
+
+💎 Venecitas:
+💳 Tarjeta (6 cuotas sin interés): 💲${formato(precioRegularVenecitas)} (6 × 💵${formato(cuotaVenecitas)})
+🏦 Transferencia/depósito (10% OFF): 💲${formato(precioTransfVenecitas)}
+🚚 Por este mes las Venecitas Neobind tienen ENVÍO GRATIS a retirar en la sucursal del expreso en destino ✨
+
+🛠 Materiales:
+💳 Tarjeta (6 cuotas sin interés): ${bolsasCemenpox} Cemenpox + ${bolsasCemento} Cemento Blanco — 💲${formato(totalMaterialesTarjeta)}
+🏦 Transferencia/depósito (10% OFF): ${bolsasCemenpox} Cemenpox + ${bolsasCemento} Cemento Blanco — 💲${formato(totalMaterialesTransf)}
+
+💡 Totales Venecitas + Materiales:
+💳 Tarjeta: 💲${formato(totalTarjeta)} (6 × 💵${formato(cuotaTotalTarjeta)})
+🏦 Transferencia: 💲${formato(totalTransf)}
+
+📦 El envío de los materiales de colocación es con cargo, ya que deben ser palletizados. Este estará sujeto a verificación previa según la localidad de destino.
+`;
+
+    const outputDiv = document.getElementById('budgetOutput');
+    outputDiv.style.display = 'block';
+    outputDiv.textContent = mensaje;
+
+    // Mostrar botón WhatsApp
+    const whatsappBtn = document.getElementById('whatsappBtn');
+    whatsappBtn.style.display = 'block';
+    whatsappBtn.onclick = () => {
+        const numeroWhatsApp = "5493425945666"; // tu número
+        const url = `https://wa.me/${numeroWhatsApp}?text=${encodeURIComponent(mensaje)}`;
+        window.open(url, '_blank');
+    };
+}
+</script>
+
+</body>
+</html>
