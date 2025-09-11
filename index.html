@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Cotizador Venecitas Neobind</title>
+<style>
+  body { font-family: Arial, sans-serif; background:#f2f2f2; margin:0; padding:0; }
+  .container { max-width: 600px; margin: 2rem auto; background:#fff; padding:2rem; border-radius:12px; box-shadow:0 0 15px rgba(0,0,0,0.1); }
+  h2 { text-align:center; color:#28a745; margin:0 0 0.5rem 0; }
+  p { margin:0.25rem 0 1rem 0; color:#444; }
+  input { width:100%; padding:12px; font-size:1rem; margin:1rem 0; border-radius:6px; border:1px solid #ccc; }
+  button { width:100%; padding:14px; font-size:1.1rem; border-radius:6px; border:none; background:#28a745; color:#fff; cursor:pointer; margin-top:1rem; }
+  button:hover { background:#218838; }
+  .budget { margin-top:2rem; background:#e9f8f1; padding:1rem 1.5rem; border-radius:10px; white-space:pre-line; font-size:0.95rem; }
+</style>
+</head>
+<body>
+
+<div class="container">
+  <h2>💎 Cotizá tu pileta Venecitas Neobind 💎</h2>
+  <p>Ingresá los m² de tu pileta para ver el presupuesto:</p>
+
+  <input type="number" id="m2Input" placeholder="Ej: 55" min="1" />
+  <button onclick="generarPresupuesto()">📊 Calcular presupuesto</button>
+
+  <div id="budgetOutput" class="budget" style="display:none;"></div>
+  <button id="whatsappBtn" style="display:none; margin-top:1rem;">📲 Enviar por WhatsApp</button>
+</div>
+
+<script>
+function generarPresupuesto() {
+  const m2Input = document.getElementById('m2Input').value;
+  const m2 = Math.ceil(parseFloat(m2Input));
+  if (!m2 || m2 <= 0) {
+    alert("Por favor ingresá un valor válido");
+    return;
+  }
+
+  // ======= Parámetros actualizados =======
+  const PRECIO_M2_TRANSF = 18750;   // transferencia/depósito
+  const PRECIO_M2_TARJETA = 22500;  // tarjeta (1 pago o 3 cuotas mismo precio)
+
+  const CEMENPOX_TRANSF = 33000;
+  const CEMENTO_TRANSF  = 32000;
+
+  const CEMENPOX_TARJ   = 36700;
+  const CEMENTO_TARJ    = 35550;
+
+  // Cantidades de materiales
+  const bolsasCemenpox = Math.ceil(m2 / 6);
+  const bolsasCemento  = Math.ceil(m2 / 25);
+
+  // Venecitas
+  const venecitasTransf = m2 * PRECIO_M2_TRANSF;
+  const venecitasTarj   = m2 * PRECIO_M2_TARJETA;
+
+  // Materiales
+  const matTransf = bolsasCemenpox * CEMENPOX_TRANSF + bolsasCemento * CEMENTO_TRANSF;
+  const matTarj   = bolsasCemenpox * CEMENPOX_TARJ + bolsasCemento * CEMENTO_TARJ;
+
+  // Totales
+  const totalTransf = venecitasTransf + matTransf;
+  const totalTarj   = venecitasTarj + matTarj;
+
+  // Cuotas (3 en tarjeta mismo precio)
+  const cuota3VenTarj = venecitasTarj / 3;
+  const cuota3TotTarj = totalTarj / 3;
+
+  // Formato con puntos
+  const f = (num) => Math.round(num).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
+
+  // Mensaje
+  const mensaje = `
+🏊‍♂️ Presupuesto Neobind 🏊‍♀️
+📐 Superficie: ${m2} m²
+
+💎 Venecitas:
+🏦 Transferencia/depósito: 💲${f(venecitasTransf)}  (💲${f(PRECIO_M2_TRANSF)}/m²)
+💳 Tarjeta (1 pago o 3 cuotas mismo precio): 💲${f(venecitasTarj)}  (3 × 💵${f(cuota3VenTarj)})
+
+🛠 Materiales de colocación:
+🏦 Transferencia/depósito: ${bolsasCemenpox} Cemenpox + ${bolsasCemento} Cemento Blanco — 💲${f(matTransf)} 
+💳 Tarjeta (1 pago o 3 cuotas mismo precio): ${bolsasCemenpox} Cemenpox + ${bolsasCemento} Cemento Blanco — 💲${f(matTarj)}
+
+💡 Totales Venecitas + Materiales:
+🏦 Transferencia/depósito: 💲${f(totalTransf)}
+💳 Tarjeta (1 pago o 3 cuotas mismo precio): 💲${f(totalTarj)}  (3 × 💵${f(cuota3TotTarj)})
+
+📦 El envío de los materiales de colocación es con cargo (palletizado). Sujeto a verificación según localidad de destino.
+`;
+
+  const out = document.getElementById('budgetOutput');
+  out.style.display = 'block';
+  out.textContent = mensaje;
+
+  const whatsappBtn = document.getElementById('whatsappBtn');
+  whatsappBtn.style.display = 'block';
+  whatsappBtn.onclick = () => {
+    const numeroWhatsApp = "5493425945666"; // tu número Neobind
+    const url = `https://wa.me/${numeroWhatsApp}?text=${encodeURIComponent(mensaje)}`;
+    window.open(url, '_blank');
+  };
+}
+</script>
+
+</body>
+</html>
