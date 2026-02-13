@@ -38,14 +38,14 @@ function generarPresupuesto() {
   }
 
   // ======= Parámetros actualizados =======
-  const PRECIO_M2_TRANSF = 18750;   // transferencia/depósito
-  const PRECIO_M2_TARJETA = 22500;  // tarjeta (1 pago o 3 cuotas mismo precio)
+  const PRECIO_M2_TRANSF = 20980;   // transferencia/depósito
+  const PRECIO_M2_TARJETA = 25150;  // tarjeta (1 pago o 3 cuotas mismo precio)
 
-  const CEMENPOX_TRANSF = 35000;
-  const CEMENTO_TRANSF  = 34000;
+  const CEMENPOX_TRANSF = 37000;
+  const CEMENTO_TRANSF  = 38000;
 
-  const CEMENPOX_TARJ   = 38850;
-  const CEMENTO_TARJ    = 37750;
+  const CEMENPOX_TARJ   = 41500;
+  const CEMENTO_TARJ    = 43000;
 
   // Cantidades de materiales
   const bolsasCemenpox = Math.ceil(m2 / 7);
@@ -88,6 +88,8 @@ function generarPresupuesto() {
 💳 Tarjeta (1 pago o 3 cuotas mismo precio): 💲${f(totalTarj)}  (3 × 💵${f(cuota3TotTarj)})
 
 📦 El envío de los materiales de colocación es con cargo (palletizado). Sujeto a verificación según localidad de destino.
+🎉 Durante todo FEBRERO 10% de descuento sobre el precio por transferencia/depósito 
+(Válido para Venecitas y Materiales de instalación)
 `;
 
   const out = document.getElementById('budgetOutput');
@@ -106,5 +108,6 @@ function generarPresupuesto() {
 
 </body>
 </html>
+
 
 
