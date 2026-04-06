@@ -99,6 +99,12 @@ button:hover { opacity:0.9; }
   white-space:pre-line;
   border:1px solid #eee;
 }
+
+/* 🔥 destaque total */
+.total-destacado {
+  font-weight:700;
+  font-size:16px;
+}
 </style>
 </head>
 
@@ -176,7 +182,8 @@ function calc(){
   const m2 = Math.ceil(parseFloat(document.getElementById("m2Input").value));
 
   if(!m2 || m2<=0) return alert("Ingresá m² válidos");
-  if(!color) return alert("Seleccioná un color");
+
+  const colorTexto = color ? color : "Sin definir";
 
   const f = n => Math.round(n).toString().replace(/\B(?=(\d{3})+(?!\d))/g,".");
 
@@ -193,36 +200,39 @@ function calc(){
   const totC = venC + matC;
 
   const txt = `
-🏊 Presupuesto Neobind
-${m2} m² — ${color}
+🏊 Presupuesto Neobind<br>
+${m2} m² — ${colorTexto}<br><br>
 
-📦 Envío GRATIS de venecitas
+📦 Envío GRATIS de venecitas<br><br>
 
-💎 Venecitas
-Transferencia: $${f(venT)}
-Tarjeta: $${f(venC)} (3× $${f(venC/3)})
+💎 Venecitas<br>
+Transferencia: $${f(venT)}<br>
+Tarjeta: $${f(venC)} (3× $${f(venC/3)})<br><br>
 
-🛠 Materiales
-${cem} Cemenpox + ${jun} Cemento Blanco
-Transferencia: $${f(matT)}
-Tarjeta: $${f(matC)}
+🛠 Materiales<br>
+${cem} Cemenpox + ${jun} Cemento Blanco<br>
+Transferencia: $${f(matT)}<br>
+Tarjeta: $${f(matC)}<br><br>
 
-💰 Total
-Transferencia: $${f(totT)}
-Tarjeta: $${f(totC)} (3× $${f(totC/3)})
+💰 Total<br>
+<span class="total-destacado">Transferencia: $${f(totT)}</span><br>
+Tarjeta: $${f(totC)} (3× $${f(totC/3)})<br><br>
 
 ⚡ Cotización válida por 3 días
 `;
 
-  document.getElementById("budget").style.display="block";
-  document.getElementById("budget").textContent=txt;
+  const out = document.getElementById("budget");
+  out.style.display="block";
+  out.innerHTML = txt;
 
   const wa = document.getElementById("wa");
   wa.style.display="block";
 
   wa.onclick = ()=>{
-    const msg = `Hola! Quiero avanzar con ${m2} m² en color ${color}`;
-    const url = `https://wa.me/p/${productId}/5493425945666?text=${encodeURIComponent(msg)}`;
+    const msg = `Hola! Quiero avanzar con ${m2} m²${color ? ` en color ${color}` : ""}`;
+    const url = productId
+      ? `https://wa.me/p/${productId}/5493425945666?text=${encodeURIComponent(msg)}`
+      : `https://wa.me/5493425945666?text=${encodeURIComponent(msg)}`;
     window.open(url,"_blank");
   };
 }
