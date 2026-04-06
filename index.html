@@ -70,11 +70,6 @@ function generarPresupuesto() {
   // Formato con puntos
   const f = (num) => Math.round(num).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
 
-  // Mensaje
-  const mensaje = `
-🏊‍♂️ Presupuesto Neobind 🏊‍♀️
-📐 Superficie: ${m2} m²
-
 // Mensaje optimizado
 const mensaje = `
 🏊‍♂️ Presupuesto Neobind
@@ -109,7 +104,8 @@ ${bolsasCemenpox} Cemenpox + ${bolsasCemento} Cemento Blanco
   whatsappBtn.style.display = 'block';
   whatsappBtn.onclick = () => {
     const numeroWhatsApp = "5493425945666"; // tu número Neobind
-    const url = `https://wa.me/${numeroWhatsApp}?text=${encodeURIComponent(mensaje)}`;
+    const mensajeWhatsApp = `Hola! Vi la cotización para ${m2} m² y quiero avanzar. ¿Cómo seguimos?`;
+const url = `https://wa.me/${numeroWhatsApp}?text=${encodeURIComponent(mensajeWhatsApp)}`;
     window.open(url, '_blank');
   };
 }
