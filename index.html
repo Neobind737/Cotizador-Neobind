@@ -4,42 +4,127 @@
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 <title>Cotizador Venecitas Neobind</title>
+
 <style>
   body { font-family: Arial, sans-serif; background:#f2f2f2; margin:0; padding:0; }
   .container { max-width: 600px; margin: 2rem auto; background:#fff; padding:2rem; border-radius:12px; box-shadow:0 0 15px rgba(0,0,0,0.1); }
   h2 { text-align:center; color:#28a745; margin:0 0 0.5rem 0; }
   p { margin:0.25rem 0 1rem 0; color:#444; }
-  input { width:100%; padding:12px; font-size:1rem; margin:1rem 0; border-radius:6px; border:1px solid #ccc; }
-  button { width:100%; padding:14px; font-size:1.1rem; border-radius:6px; border:none; background:#28a745; color:#fff; cursor:pointer; margin-top:1rem; }
+
+  input {
+    width:100%;
+    padding:12px;
+    font-size:1rem;
+    margin:1rem 0;
+    border-radius:6px;
+    border:1px solid #ccc;
+  }
+
+  button {
+    width:100%;
+    padding:14px;
+    font-size:1.1rem;
+    border-radius:6px;
+    border:none;
+    background:#28a745;
+    color:#fff;
+    cursor:pointer;
+    margin-top:1rem;
+  }
+
   button:hover { background:#218838; }
-  .budget { margin-top:2rem; background:#e9f8f1; padding:1rem 1.5rem; border-radius:10px; white-space:pre-line; font-size:0.95rem; }
+
+  .budget {
+    margin-top:2rem;
+    background:#e9f8f1;
+    padding:1rem 1.5rem;
+    border-radius:10px;
+    white-space:pre-line;
+    font-size:0.95rem;
+  }
+
+  /* COLORES */
+  .colors {
+    display:grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap:10px;
+    margin-top:1rem;
+  }
+
+  .color-option {
+    padding:12px;
+    border-radius:8px;
+    border:2px solid transparent;
+    cursor:pointer;
+    text-align:center;
+    font-weight:bold;
+    color:#fff;
+  }
+
+  .color-option.selected {
+    border:2px solid #000;
+  }
+
+  .blanco { background:#eaeaea; color:#000; }
+  .agua { background:#00bcd4; }
+  .turquesa { background:#00a9a5; }
+  .azul { background:#007bff; }
+  .verde { background:#28a745; }
+  .negro { background:#333; }
+  .gris { background:#888; }
 </style>
 </head>
+
 <body>
 
 <div class="container">
   <h2>💎 Cotizá tu pileta Venecitas Neobind 💎</h2>
-  <p>Ingresá los m² de tu pileta para ver el presupuesto:</p>
+  <p>Ingresá los m² y elegí el color:</p>
 
   <input type="number" id="m2Input" placeholder="Ej: 55" min="1" />
+
+  <div class="colors">
+    <div class="color-option blanco" onclick="seleccionarColor(this,'Blanco Nácar')">Blanco Nácar</div>
+    <div class="color-option agua" onclick="seleccionarColor(this,'Agua Marina')">Agua Marina</div>
+    <div class="color-option turquesa" onclick="seleccionarColor(this,'Turquesa')">Turquesa</div>
+    <div class="color-option azul" onclick="seleccionarColor(this,'Azul')">Azul</div>
+    <div class="color-option verde" onclick="seleccionarColor(this,'Verde Esmeralda')">Verde Esmeralda</div>
+    <div class="color-option negro" onclick="seleccionarColor(this,'Negro')">Negro</div>
+    <div class="color-option gris" onclick="seleccionarColor(this,'Gris')">Gris</div>
+  </div>
+
   <button onclick="generarPresupuesto()">📊 Calcular presupuesto</button>
 
   <div id="budgetOutput" class="budget" style="display:none;"></div>
-  <button id="whatsappBtn" style="display:none; margin-top:1rem;">📲 Quiero avanzar por WhatsApp</button>
+  <button id="whatsappBtn" style="display:none;">📲 Quiero avanzar por WhatsApp</button>
 </div>
 
 <script>
+let colorSeleccionado = "";
+
+function seleccionarColor(elemento, color) {
+  colorSeleccionado = color;
+
+  document.querySelectorAll('.color-option').forEach(el => el.classList.remove('selected'));
+  elemento.classList.add('selected');
+}
+
 function generarPresupuesto() {
   const m2Input = document.getElementById('m2Input').value;
   const m2 = Math.ceil(parseFloat(m2Input));
+
   if (!m2 || m2 <= 0) {
     alert("Por favor ingresá un valor válido");
     return;
   }
 
-  // ======= Parámetros actualizados =======
-  const PRECIO_M2_TRANSF = 20980;   // transferencia/depósito
-  const PRECIO_M2_TARJETA = 25150;  // tarjeta (1 pago o 3 cuotas mismo precio)
+  if (!colorSeleccionado) {
+    alert("Seleccioná un color");
+    return;
+  }
+
+  const PRECIO_M2_TRANSF = 20980;
+  const PRECIO_M2_TARJETA = 25150;
 
   const CEMENPOX_TRANSF = 37000;
   const CEMENTO_TRANSF  = 38000;
@@ -47,33 +132,27 @@ function generarPresupuesto() {
   const CEMENPOX_TARJ   = 41500;
   const CEMENTO_TARJ    = 43000;
 
-  // Cantidades de materiales
-  const bolsasCemenpox = Math.ceil(m2 / 7);
+  const bolsasCemenpox = Math.ceil(m2 / 6);
   const bolsasCemento  = Math.ceil(m2 / 25);
 
-  // Venecitas
   const venecitasTransf = m2 * PRECIO_M2_TRANSF;
   const venecitasTarj   = m2 * PRECIO_M2_TARJETA;
 
-  // Materiales
   const matTransf = bolsasCemenpox * CEMENPOX_TRANSF + bolsasCemento * CEMENTO_TRANSF;
   const matTarj   = bolsasCemenpox * CEMENPOX_TARJ + bolsasCemento * CEMENTO_TARJ;
 
-  // Totales
   const totalTransf = venecitasTransf + matTransf;
   const totalTarj   = venecitasTarj + matTarj;
 
-  // Cuotas (3 en tarjeta mismo precio)
   const cuota3VenTarj = venecitasTarj / 3;
   const cuota3TotTarj = totalTarj / 3;
 
-  // Formato con puntos
   const f = (num) => Math.round(num).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
 
-// Mensaje optimizado
-const mensaje = `
+  const mensaje = `
 🏊‍♂️ Presupuesto Neobind
 📐 ${m2} m²
+🎨 Color: ${colorSeleccionado}
 
 📦 Envío GRATIS de venecitas a todo el país
 
@@ -96,21 +175,25 @@ ${bolsasCemenpox} Cemenpox + ${bolsasCemento} Cemento Blanco
 
 ⚡ Precios sujetos a actualización — cotización válida por 3 días
 `;
+
   const out = document.getElementById('budgetOutput');
   out.style.display = 'block';
   out.textContent = mensaje;
 
   const whatsappBtn = document.getElementById('whatsappBtn');
   whatsappBtn.style.display = 'block';
+
   whatsappBtn.onclick = () => {
-    const numeroWhatsApp = "5493425945666"; // tu número Neobind
-    const mensajeWhatsApp = `Hola! Vi la cotización para ${m2} m² y quiero avanzar. ¿Cómo seguimos?`;
-const url = `https://wa.me/${numeroWhatsApp}?text=${encodeURIComponent(mensajeWhatsApp)}`;
+    const numeroWhatsApp = "5493425945666";
+    const mensajeWhatsApp = `Hola! Vi la cotización para ${m2} m² en color ${colorSeleccionado} y quiero avanzar. ¿Cómo seguimos?`;
+    const url = `https://wa.me/${numeroWhatsApp}?text=${encodeURIComponent(mensajeWhatsApp)}`;
     window.open(url, '_blank');
   };
 }
 </script>
 
+</body>
+</html>
 </body>
 </html>
 
