@@ -3,200 +3,217 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-<title>Cotizador Venecitas Neobind</title>
+
+<title>Cotizador Neobind</title>
 
 <style>
-  body { font-family: Arial, sans-serif; background:#f2f2f2; margin:0; padding:0; }
-  .container { max-width: 600px; margin: 2rem auto; background:#fff; padding:2rem; border-radius:12px; box-shadow:0 0 15px rgba(0,0,0,0.1); }
-  h2 { text-align:center; color:#28a745; margin:0 0 0.5rem 0; }
-  p { margin:0.25rem 0 1rem 0; color:#444; }
+body {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto;
+  background: #f5f5f7;
+  margin:0;
+}
 
-  input {
-    width:100%;
-    padding:12px;
-    font-size:1rem;
-    margin:1rem 0;
-    border-radius:6px;
-    border:1px solid #ccc;
-  }
+.container {
+  max-width: 520px;
+  margin: 40px auto;
+  background: #ffffff;
+  padding: 28px;
+  border-radius: 16px;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.08);
+}
 
-  button {
-    width:100%;
-    padding:14px;
-    font-size:1.1rem;
-    border-radius:6px;
-    border:none;
-    background:#28a745;
-    color:#fff;
-    cursor:pointer;
-    margin-top:1rem;
-  }
+h2 {
+  text-align:center;
+  font-weight:600;
+  font-size:22px;
+  margin-bottom:6px;
+}
 
-  button:hover { background:#218838; }
+.subtitle {
+  text-align:center;
+  color:#777;
+  font-size:14px;
+  margin-bottom:20px;
+}
 
-  .budget {
-    margin-top:2rem;
-    background:#e9f8f1;
-    padding:1rem 1.5rem;
-    border-radius:10px;
-    white-space:pre-line;
-    font-size:0.95rem;
-  }
+input {
+  width:100%;
+  padding:14px;
+  border-radius:10px;
+  border:1px solid #ddd;
+  font-size:16px;
+  margin-bottom:20px;
+}
 
-  /* COLORES */
-  .colors {
-    display:grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap:10px;
-    margin-top:1rem;
-  }
+.colors {
+  display:grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap:12px;
+  margin-bottom:20px;
+}
 
-  .color-option {
-    padding:12px;
-    border-radius:8px;
-    border:2px solid transparent;
-    cursor:pointer;
-    text-align:center;
-    font-weight:bold;
-    color:#fff;
-  }
+.color-card {
+  padding:14px;
+  border-radius:12px;
+  border:1px solid #eee;
+  cursor:pointer;
+  text-align:center;
+  font-size:14px;
+  transition:0.2s;
+}
 
-  .color-option.selected {
-    border:2px solid #000;
-  }
+.color-card:hover {
+  transform:translateY(-2px);
+}
 
-  .blanco { background:#eaeaea; color:#000; }
-  .agua { background:#00bcd4; }
-  .turquesa { background:#00a9a5; }
-  .azul { background:#007bff; }
-  .verde { background:#28a745; }
-  .negro { background:#333; }
-  .gris { background:#888; }
+.color-card.selected {
+  border:2px solid #111;
+}
+
+.dot {
+  width:18px;
+  height:18px;
+  border-radius:50%;
+  margin:0 auto 6px;
+}
+
+button {
+  width:100%;
+  padding:16px;
+  border:none;
+  border-radius:10px;
+  background:#111;
+  color:white;
+  font-size:16px;
+  cursor:pointer;
+}
+
+button:hover {
+  opacity:0.9;
+}
+
+.budget {
+  margin-top:25px;
+  background:#fafafa;
+  padding:18px;
+  border-radius:12px;
+  font-size:14px;
+  white-space:pre-line;
+  border:1px solid #eee;
+}
 </style>
 </head>
 
 <body>
 
 <div class="container">
-  <h2>💎 Cotizá tu pileta Venecitas Neobind 💎</h2>
-  <p>Ingresá los m² y elegí el color:</p>
 
-  <input type="number" id="m2Input" placeholder="Ej: 55" min="1" />
+<h2>Cotizá tu pileta</h2>
+<div class="subtitle">Venecitas Neobind</div>
 
-  <div class="colors">
-    <div class="color-option blanco" onclick="seleccionarColor(this,'Blanco Nácar')">Blanco Nácar</div>
-    <div class="color-option agua" onclick="seleccionarColor(this,'Agua Marina')">Agua Marina</div>
-    <div class="color-option turquesa" onclick="seleccionarColor(this,'Turquesa')">Turquesa</div>
-    <div class="color-option azul" onclick="seleccionarColor(this,'Azul')">Azul</div>
-    <div class="color-option verde" onclick="seleccionarColor(this,'Verde Esmeralda')">Verde Esmeralda</div>
-    <div class="color-option negro" onclick="seleccionarColor(this,'Negro')">Negro</div>
-    <div class="color-option gris" onclick="seleccionarColor(this,'Gris')">Gris</div>
+<input type="number" id="m2Input" placeholder="Ingresá los m² (ej: 55)" />
+
+<div class="colors">
+  <div class="color-card" onclick="sel(this,'Blanco Nácar','3619704621491762')">
+    <div class="dot" style="background:#eaeaea"></div>Blanco Nácar
   </div>
+  <div class="color-card" onclick="sel(this,'Agua Marina','3597377153718869')">
+    <div class="dot" style="background:#00bcd4"></div>Agua Marina
+  </div>
+  <div class="color-card" onclick="sel(this,'Turquesa','3856030544515788')">
+    <div class="dot" style="background:#00a9a5"></div>Turquesa
+  </div>
+  <div class="color-card" onclick="sel(this,'Azul','3620251704771327')">
+    <div class="dot" style="background:#007bff"></div>Azul
+  </div>
+  <div class="color-card" onclick="sel(this,'Verde Esmeralda','4295199693857459')">
+    <div class="dot" style="background:#28a745"></div>Verde Esmeralda
+  </div>
+  <div class="color-card" onclick="sel(this,'Negro','3511570448947533')">
+    <div class="dot" style="background:#222"></div>Negro
+  </div>
+</div>
 
-  <button onclick="generarPresupuesto()">📊 Calcular presupuesto</button>
+<button onclick="calc()">Calcular presupuesto</button>
 
-  <div id="budgetOutput" class="budget" style="display:none;"></div>
-  <button id="whatsappBtn" style="display:none;">📲 Quiero avanzar por WhatsApp</button>
+<div id="budget" class="budget" style="display:none;"></div>
+
+<button id="wa" style="display:none; margin-top:15px;">
+  Quiero avanzar por WhatsApp
+</button>
+
 </div>
 
 <script>
-let colorSeleccionado = "";
+let color = "";
+let productId = "";
 
-function seleccionarColor(elemento, color) {
-  colorSeleccionado = color;
+function sel(el, c, id){
+  color = c;
+  productId = id;
 
-  document.querySelectorAll('.color-option').forEach(el => el.classList.remove('selected'));
-  elemento.classList.add('selected');
+  document.querySelectorAll('.color-card').forEach(e=>e.classList.remove('selected'));
+  el.classList.add('selected');
 }
 
-function generarPresupuesto() {
-  const m2Input = document.getElementById('m2Input').value;
-  const m2 = Math.ceil(parseFloat(m2Input));
+function calc(){
+  const m2 = Math.ceil(parseFloat(document.getElementById("m2Input").value));
 
-  if (!m2 || m2 <= 0) {
-    alert("Por favor ingresá un valor válido");
-    return;
-  }
+  if(!m2 || m2<=0) return alert("Ingresá m² válidos");
+  if(!color) return alert("Seleccioná un color");
 
-  if (!colorSeleccionado) {
-    alert("Seleccioná un color");
-    return;
-  }
+  const f = n => Math.round(n).toString().replace(/\B(?=(\d{3})+(?!\d))/g,".");
 
-  const PRECIO_M2_TRANSF = 20980;
-  const PRECIO_M2_TARJETA = 25150;
+  const venT = m2*20980;
+  const venC = m2*25150;
 
-  const CEMENPOX_TRANSF = 37000;
-  const CEMENTO_TRANSF  = 38000;
+  const cem = Math.ceil(m2/6);
+  const jun = Math.ceil(m2/25);
 
-  const CEMENPOX_TARJ   = 41500;
-  const CEMENTO_TARJ    = 43000;
+  const matT = cem*37000 + jun*38000;
+  const matC = cem*41500 + jun*43000;
 
-  const bolsasCemenpox = Math.ceil(m2 / 6);
-  const bolsasCemento  = Math.ceil(m2 / 25);
+  const totT = venT + matT;
+  const totC = venC + matC;
 
-  const venecitasTransf = m2 * PRECIO_M2_TRANSF;
-  const venecitasTarj   = m2 * PRECIO_M2_TARJETA;
+  const txt = `
+🏊 Presupuesto Neobind
+${m2} m² — ${color}
 
-  const matTransf = bolsasCemenpox * CEMENPOX_TRANSF + bolsasCemento * CEMENTO_TRANSF;
-  const matTarj   = bolsasCemenpox * CEMENPOX_TARJ + bolsasCemento * CEMENTO_TARJ;
-
-  const totalTransf = venecitasTransf + matTransf;
-  const totalTarj   = venecitasTarj + matTarj;
-
-  const cuota3VenTarj = venecitasTarj / 3;
-  const cuota3TotTarj = totalTarj / 3;
-
-  const f = (num) => Math.round(num).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
-
-  const mensaje = `
-🏊‍♂️ Presupuesto Neobind
-📐 ${m2} m²
-🎨 Color: ${colorSeleccionado}
-
-📦 Envío GRATIS de venecitas a todo el país
+📦 Envío GRATIS de venecitas
 
 💎 Venecitas
-🏦 Transferencia (mejor precio): $${f(venecitasTransf)}
-💳 Tarjeta (3 cuotas sin interés): $${f(venecitasTarj)} (3× $${f(cuota3VenTarj)})
+Transferencia: $${f(venT)}
+Tarjeta: $${f(venC)} (3× $${f(venC/3)})
 
-🛠 Materiales de colocación
-${bolsasCemenpox} Cemenpox + ${bolsasCemento} Cemento Blanco
-🏦 Transferencia: $${f(matTransf)}
-💳 Tarjeta (3 cuotas sin interés): $${f(matTarj)}
+🛠 Materiales
+${cem} Cemenpox + ${jun} Cemento Blanco
+Transferencia: $${f(matT)}
+Tarjeta: $${f(matC)}
 
-💰 Total completo
-🏦 Transferencia: $${f(totalTransf)}
-💳 Tarjeta (3 cuotas sin interés): $${f(totalTarj)} (3× $${f(cuota3TotTarj)})
+💰 Total
+Transferencia: $${f(totT)}
+Tarjeta: $${f(totC)} (3× $${f(totC/3)})
 
-📦 Envío de materiales con cargo (en pallet, según localidad)
-
-👉 Trabajamos con envío a todo el país y cotizamos todo listo para colocar
-
-⚡ Precios sujetos a actualización — cotización válida por 3 días
+⚡ Cotización válida por 3 días
 `;
 
-  const out = document.getElementById('budgetOutput');
-  out.style.display = 'block';
-  out.textContent = mensaje;
+  document.getElementById("budget").style.display="block";
+  document.getElementById("budget").textContent=txt;
 
-  const whatsappBtn = document.getElementById('whatsappBtn');
-  whatsappBtn.style.display = 'block';
+  const wa = document.getElementById("wa");
+  wa.style.display="block";
 
-  whatsappBtn.onclick = () => {
-    const numeroWhatsApp = "5493425945666";
-    const mensajeWhatsApp = `Hola! Vi la cotización para ${m2} m² en color ${colorSeleccionado} y quiero avanzar. ¿Cómo seguimos?`;
-    const url = `https://wa.me/${numeroWhatsApp}?text=${encodeURIComponent(mensajeWhatsApp)}`;
-    window.open(url, '_blank');
+  wa.onclick = ()=>{
+    const msg = `Hola! Quiero avanzar con ${m2} m² en color ${color}`;
+    const url = `https://wa.me/p/${productId}/5493425945666?text=${encodeURIComponent(msg)}`;
+    window.open(url,"_blank");
   };
 }
 </script>
 
 </body>
 </html>
-</body>
-</html>
-
 
 
 
