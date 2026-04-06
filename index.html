@@ -26,6 +26,7 @@ h2 {
   text-align:center;
   font-size:22px;
   margin-bottom:5px;
+  font-weight:600;
 }
 
 .subtitle {
@@ -52,28 +53,28 @@ input {
 }
 
 .color-card {
+  padding:14px;
   border-radius:12px;
-  overflow:hidden;
+  border:1px solid #eee;
   cursor:pointer;
-  border:2px solid transparent;
-  transition:0.2s;
-  background:#fff;
-}
-
-.color-card img {
-  width:100%;
-  height:90px;
-  object-fit:cover;
-}
-
-.color-name {
-  padding:10px;
   text-align:center;
   font-size:14px;
+  transition:0.2s;
+}
+
+.color-card:hover {
+  transform:translateY(-2px);
 }
 
 .color-card.selected {
   border:2px solid #111;
+}
+
+.dot {
+  width:16px;
+  height:16px;
+  border-radius:50%;
+  margin:0 auto 6px;
 }
 
 button {
@@ -113,38 +114,38 @@ button:hover { opacity:0.9; }
 <div class="colors">
 
 <div class="color-card" onclick="sel(this,'Blanco Nácar','3619704621491762')">
-<img src="https://images.unsplash.com/photo-1581092795360-fd1ca04f0952">
-<div class="color-name">Blanco Nácar</div>
+  <div class="dot" style="background:#eaeaea"></div>
+  Blanco Nácar
 </div>
 
 <div class="color-card" onclick="sel(this,'Agua Marina','3597377153718869')">
-<img src="https://images.unsplash.com/photo-1507525428034-b723cf961d3e">
-<div class="color-name">Agua Marina</div>
+  <div class="dot" style="background:#00bcd4"></div>
+  Agua Marina
 </div>
 
 <div class="color-card" onclick="sel(this,'Turquesa','3856030544515788')">
-<img src="https://images.unsplash.com/photo-1500375592092-40eb2168fd21">
-<div class="color-name">Turquesa</div>
+  <div class="dot" style="background:#00a9a5"></div>
+  Turquesa
 </div>
 
 <div class="color-card" onclick="sel(this,'Azul','3620251704771327')">
-<img src="https://images.unsplash.com/photo-1506744038136-46273834b3fb">
-<div class="color-name">Azul</div>
+  <div class="dot" style="background:#007bff"></div>
+  Azul
 </div>
 
 <div class="color-card" onclick="sel(this,'Verde Esmeralda','4295199693857459')">
-<img src="https://images.unsplash.com/photo-1500530855697-b586d89ba3ee">
-<div class="color-name">Verde Esmeralda</div>
+  <div class="dot" style="background:#28a745"></div>
+  Verde Esmeralda
 </div>
 
 <div class="color-card" onclick="sel(this,'Negro','3511570448947533')">
-<img src="https://images.unsplash.com/photo-1519681393784-d120267933ba">
-<div class="color-name">Negro</div>
+  <div class="dot" style="background:#222"></div>
+  Negro
 </div>
 
 <div class="color-card" onclick="sel(this,'Gris','3580942102015676')">
-<img src="https://images.unsplash.com/photo-1492724441997-5dc865305da7">
-<div class="color-name">Gris</div>
+  <div class="dot" style="background:#6e6e6e"></div>
+  Gris
 </div>
 
 </div>
