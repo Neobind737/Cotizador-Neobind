@@ -25,7 +25,7 @@
   <button onclick="generarPresupuesto()">📊 Calcular presupuesto</button>
 
   <div id="budgetOutput" class="budget" style="display:none;"></div>
-  <button id="whatsappBtn" style="display:none; margin-top:1rem;">📲 Enviar por WhatsApp</button>
+  <button id="whatsappBtn" style="display:none; margin-top:1rem;">📲 Quiero avanzar por WhatsApp</button>
 </div>
 
 <script>
@@ -75,21 +75,32 @@ function generarPresupuesto() {
 🏊‍♂️ Presupuesto Neobind 🏊‍♀️
 📐 Superficie: ${m2} m²
 
-💎 Venecitas:
-🏦 Transferencia/depósito: 💲${f(venecitasTransf)}  (💲${f(PRECIO_M2_TRANSF)}/m²)
-💳 Tarjeta (1 pago o 3 cuotas mismo precio): 💲${f(venecitasTarj)}  (3 × 💵${f(cuota3VenTarj)})
+// Mensaje optimizado
+const mensaje = `
+🏊‍♂️ Presupuesto Neobind
+📐 ${m2} m²
 
-🛠 Materiales de colocación:
-🏦 Transferencia/depósito: ${bolsasCemenpox} Cemenpox + ${bolsasCemento} Cemento Blanco — 💲${f(matTransf)} 
-💳 Tarjeta (1 pago o 3 cuotas mismo precio): ${bolsasCemenpox} Cemenpox + ${bolsasCemento} Cemento Blanco — 💲${f(matTarj)}
+📦 Envío GRATIS de venecitas a todo el país
 
-💡 Totales Venecitas + Materiales:
-🏦 Transferencia/depósito: 💲${f(totalTransf)}
-💳 Tarjeta (1 pago o 3 cuotas mismo precio): 💲${f(totalTarj)}  (3 × 💵${f(cuota3TotTarj)})
+💎 Venecitas
+🏦 Transferencia (mejor precio): $${f(venecitasTransf)}
+💳 Tarjeta (3 cuotas sin interés): $${f(venecitasTarj)} (3× $${f(cuota3VenTarj)})
 
-📦 El envío de los materiales de colocación es con cargo (palletizado). Sujeto a verificación según localidad de destino.
+🛠 Materiales de colocación
+${bolsasCemenpox} Cemenpox + ${bolsasCemento} Cemento Blanco
+🏦 Transferencia: $${f(matTransf)}
+💳 Tarjeta (3 cuotas sin interés): $${f(matTarj)}
+
+💰 Total completo
+🏦 Transferencia: $${f(totalTransf)}
+💳 Tarjeta (3 cuotas sin interés): $${f(totalTarj)} (3× $${f(cuota3TotTarj)})
+
+📦 Envío de materiales con cargo (en pallet, según localidad)
+
+👉 Trabajamos con envío a todo el país y cotizamos todo listo para colocar
+
+⚡ Precios sujetos a actualización — cotización válida por 3 días
 `;
-
   const out = document.getElementById('budgetOutput');
   out.style.display = 'block';
   out.textContent = mensaje;
