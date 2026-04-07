@@ -91,13 +91,24 @@ button {
 button:hover { opacity:0.9; }
 
 .budget {
-  margin-top:25px;
+  margin-top:20px;
   background:#fafafa;
-  padding:18px;
+  padding:16px;
   border-radius:12px;
   font-size:14px;
-  white-space:pre-line;
   border:1px solid #eee;
+  line-height:1.4;
+}
+
+/* 🔥 bloques más compactos */
+.block {
+  margin-bottom:12px;
+}
+
+/* 🔥 títulos */
+.block-title {
+  font-weight:600;
+  margin-bottom:4px;
 }
 
 /* 🔥 destaque total */
@@ -200,25 +211,37 @@ function calc(){
   const totC = venC + matC;
 
   const txt = `
-🏊 Presupuesto Neobind<br>
-${m2} m² — ${colorTexto}<br><br>
+<div class="block">
+🏊 <b>Presupuesto Neobind</b><br>
+${m2} m² — ${colorTexto}
+</div>
 
-📦 Envío GRATIS de venecitas<br><br>
+<div class="block">
+📦 Envío GRATIS de venecitas
+</div>
 
-💎 Venecitas<br>
+<div class="block">
+<div class="block-title">💎 Venecitas</div>
 Transferencia: $${f(venT)}<br>
-Tarjeta: $${f(venC)} (3× $${f(venC/3)})<br><br>
+Tarjeta: $${f(venC)} (3× $${f(venC/3)})
+</div>
 
-🛠 Materiales<br>
+<div class="block">
+<div class="block-title">🛠 Materiales</div>
 ${cem} Cemenpox + ${jun} Cemento Blanco<br>
 Transferencia: $${f(matT)}<br>
-Tarjeta: $${f(matC)}<br><br>
+Tarjeta: $${f(matC)}
+</div>
 
-💰 Total<br>
+<div class="block">
+<div class="block-title">💰 Total</div>
 <span class="total-destacado">Transferencia: $${f(totT)}</span><br>
-Tarjeta: $${f(totC)} (3× $${f(totC/3)})<br><br>
+Tarjeta: $${f(totC)} (3× $${f(totC/3)})
+</div>
 
+<div class="block">
 ⚡ Cotización válida por 3 días
+</div>
 `;
 
   const out = document.getElementById("budget");
@@ -240,7 +263,6 @@ Tarjeta: $${f(totC)} (3× $${f(totC/3)})<br><br>
 
 </body>
 </html>
-
 
 
 
