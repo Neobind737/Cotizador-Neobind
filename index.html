@@ -13,7 +13,6 @@ body {
   margin:0;
 }
 
-/* 🔥 CONTENEDOR PREMIUM */
 .container {
   max-width: 520px;
   margin: 50px auto;
@@ -23,7 +22,6 @@ body {
   box-shadow: 0 20px 50px rgba(0,0,0,0.08);
 }
 
-/* 🔥 LOGO */
 .logo {
   text-align:center;
   margin-bottom:20px;
@@ -34,7 +32,6 @@ body {
   opacity:0.95;
 }
 
-/* 🔥 TITULOS */
 h2 {
   text-align:center;
   font-size:24px;
@@ -49,7 +46,6 @@ h2 {
   margin-bottom:25px;
 }
 
-/* 🔥 INPUT */
 input {
   width:100%;
   padding:14px;
@@ -59,7 +55,6 @@ input {
   margin-bottom:20px;
 }
 
-/* 🔥 COLORES */
 .colors {
   display:grid;
   grid-template-columns: repeat(2, 1fr);
@@ -92,7 +87,6 @@ input {
   margin:0 auto 6px;
 }
 
-/* 🔥 BOTON */
 button {
   width:100%;
   padding:16px;
@@ -103,6 +97,7 @@ button {
   font-size:16px;
   cursor:pointer;
   transition:0.2s;
+  margin-top:10px;
 }
 
 button:hover { 
@@ -110,7 +105,6 @@ button:hover {
   transform:translateY(-1px);
 }
 
-/* 🔥 RESULTADO */
 .budget {
   margin-top:25px;
   background:#fafafa;
@@ -121,7 +115,6 @@ button:hover {
   line-height:1.4;
 }
 
-/* 🔥 BLOQUES */
 .block {
   margin-bottom:14px;
 }
@@ -131,20 +124,17 @@ button:hover {
   margin-bottom:4px;
 }
 
-/* 🔥 TOTAL DESTACADO */
 .total-destacado {
   font-weight:700;
   font-size:17px;
 }
 
-/* 🔥 BOTON WHATSAPP */
 #wa {
   background:#25D366;
-  margin-top:15px;
 }
 
-#wa:hover {
-  opacity:0.9;
+#copyWA {
+  background:#007AFF;
 }
 </style>
 </head>
@@ -153,7 +143,6 @@ button:hover {
 
 <div class="container">
 
-<!-- 🔥 LOGO -->
 <div class="logo">
   <img src="https://raw.githubusercontent.com/Neobind737/Cotizador-Neobind/main/NEO%20MARCA.png" alt="Neobind">
 </div>
@@ -166,38 +155,31 @@ button:hover {
 <div class="colors">
 
 <div class="color-card" onclick="sel(this,'Blanco Nácar','3619704621491762')">
-  <div class="dot" style="background:#eaeaea"></div>
-  Blanco Nácar
+  <div class="dot" style="background:#eaeaea"></div>Blanco Nácar
 </div>
 
 <div class="color-card" onclick="sel(this,'Agua Marina','3597377153718869')">
-  <div class="dot" style="background:#00bcd4"></div>
-  Agua Marina
+  <div class="dot" style="background:#00bcd4"></div>Agua Marina
 </div>
 
 <div class="color-card" onclick="sel(this,'Turquesa','3856030544515788')">
-  <div class="dot" style="background:#00a9a5"></div>
-  Turquesa
+  <div class="dot" style="background:#00a9a5"></div>Turquesa
 </div>
 
 <div class="color-card" onclick="sel(this,'Azul','3620251704771327')">
-  <div class="dot" style="background:#007bff"></div>
-  Azul
+  <div class="dot" style="background:#007bff"></div>Azul
 </div>
 
 <div class="color-card" onclick="sel(this,'Verde Esmeralda','4295199693857459')">
-  <div class="dot" style="background:#28a745"></div>
-  Verde Esmeralda
+  <div class="dot" style="background:#28a745"></div>Verde Esmeralda
 </div>
 
 <div class="color-card" onclick="sel(this,'Negro','3511570448947533')">
-  <div class="dot" style="background:#222"></div>
-  Negro
+  <div class="dot" style="background:#222"></div>Negro
 </div>
 
 <div class="color-card" onclick="sel(this,'Gris','3580942102015676')">
-  <div class="dot" style="background:#6e6e6e"></div>
-  Gris
+  <div class="dot" style="background:#6e6e6e"></div>Gris
 </div>
 
 </div>
@@ -206,15 +188,15 @@ button:hover {
 
 <div id="budget" class="budget" style="display:none;"></div>
 
-<button id="wa" style="display:none;">
-📲 Quiero avanzar por WhatsApp
-</button>
+<button id="copyWA" style="display:none;">📋 Copiar para WhatsApp</button>
+<button id="wa" style="display:none;">📲 Quiero avanzar por WhatsApp</button>
 
 </div>
 
 <script>
 let color = "";
 let productId = "";
+let whatsappText = "";
 
 function sel(el, c, id){
   color = c;
@@ -279,14 +261,43 @@ Tarjeta: $${f(totC)} (3× $${f(totC/3)})
 </div>
 `;
 
+  whatsappText =
+`🏊 *PRESUPUESTO NEOBIND*
+
+*${m2} m²* — ${colorTexto}
+
+📦 *Envío GRATIS de venecitas*
+
+💎 *Venecitas*
+• Transferencia: *$${f(venT)}*
+• Tarjeta: *$${f(venC)}*
+  (3× $${f(venC/3)})
+
+🛠 *Materiales*
+• ${cem} Cemenpox + ${jun} Cemento Blanco
+• Transferencia: *$${f(matT)}*
+• Tarjeta: *$${f(matC)}*
+
+💰 *TOTAL*
+• Transferencia: *$${f(totT)}*
+• Tarjeta: *$${f(totC)}*
+  (3× $${f(totC/3)})
+
+⚡ _Cotización válida por 3 días_`;
+
   const out = document.getElementById("budget");
   out.style.display="block";
   out.innerHTML = txt;
 
-  const wa = document.getElementById("wa");
-  wa.style.display="block";
+  document.getElementById("copyWA").style.display="block";
+  document.getElementById("wa").style.display="block";
 
-  wa.onclick = ()=>{
+  document.getElementById("copyWA").onclick = async ()=>{
+    await navigator.clipboard.writeText(whatsappText);
+    alert("Copiado para WhatsApp ✅");
+  };
+
+  document.getElementById("wa").onclick = ()=>{
     const msg = `Hola! Quiero avanzar con ${m2} m²${color ? ` en color ${color}` : ""}`;
     const url = productId
       ? `https://wa.me/p/${productId}/5493425945666?text=${encodeURIComponent(msg)}`
@@ -298,7 +309,6 @@ Tarjeta: $${f(totC)} (3× $${f(totC/3)})
 
 </body>
 </html>
-
 
 
 
