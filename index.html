@@ -43,7 +43,7 @@ input {
   margin-bottom:25px;
 }
 
-/* 🎨 CARDS */
+/* 🎨 CARDS PREMIUM */
 .colors {
   display:grid;
   grid-template-columns: repeat(2, 1fr);
@@ -73,17 +73,6 @@ input {
   background:linear-gradient(to top, rgba(0,0,0,0.55), transparent);
 }
 
-.color-card::before {
-  content:"";
-  position:absolute;
-  inset:0;
-  background:linear-gradient(120deg, transparent 30%, rgba(255,255,255,0.2), transparent 70%);
-  opacity:0;
-  transition:0.4s;
-}
-
-.color-card:hover::before { opacity:1; }
-
 .color-name {
   position:absolute;
   bottom:10px;
@@ -91,15 +80,14 @@ input {
   color:white;
   font-weight:500;
   font-size:14px;
-  z-index:2;
 }
 
-.color-card:hover { transform:translateY(-4px); }
-.color-card:hover img { transform:scale(1.05); }
+.color-card:hover {
+  transform:translateY(-4px);
+}
 
 .color-card.selected {
   outline:3px solid #111;
-  transform:scale(0.97);
 }
 
 /* BOTONES */
@@ -112,10 +100,11 @@ button {
   color:white;
   font-size:16px;
   cursor:pointer;
-  margin-top:15px;
+  margin-top:10px;
 }
 
-button:hover { opacity:0.9; }
+#wa { background:#25D366; }
+#copyWA { background:#007AFF; }
 
 .budget {
   margin-top:25px;
@@ -124,19 +113,13 @@ button:hover { opacity:0.9; }
   border-radius:14px;
   font-size:14px;
   border:1px solid #eee;
+  line-height:1.4;
 }
 
-.total-destacado {
-  font-weight:700;
-  font-size:17px;
-}
+.block { margin-bottom:14px; }
+.block-title { font-weight:600; }
+.total-destacado { font-weight:700; font-size:17px; }
 
-#wa { background:#25D366; }
-#copyWA { background:#007AFF; }
-
-@media (max-width:480px){
-  .color-card { height:100px; }
-}
 </style>
 </head>
 
@@ -149,7 +132,7 @@ button:hover { opacity:0.9; }
 </div>
 
 <h2>Cotizá tu pileta</h2>
-<div class="subtitle">Elegí un color</div>
+<div class="subtitle">Venecitas Neobind</div>
 
 <input type="number" id="m2Input" placeholder="Ingresá los m² (ej: 55)" />
 
@@ -190,10 +173,10 @@ button:hover { opacity:0.9; }
 <div class="color-name">Gris</div>
 </div>
 
-<!-- 🆕 CATÁLOGO -->
-<div class="color-card" onclick="sel(this,'Color a definir','')">
+<!-- CATÁLOGO -->
+<div class="color-card" onclick="sel(this,'No definí aún','')">
 <img src="https://raw.githubusercontent.com/Neobind737/Cotizador-Neobind/main/img/catalogo.jpg">
-<div class="color-name">No definí el color</div>
+<div class="color-name">No definí aún</div>
 </div>
 
 </div>
@@ -210,6 +193,7 @@ button:hover { opacity:0.9; }
 <script>
 let color = "";
 let productId = "";
+let whatsappText = "";
 
 function sel(el, c, id){
   color = c;
@@ -220,22 +204,104 @@ function sel(el, c, id){
 
 function calc(){
   const m2 = Math.ceil(parseFloat(document.getElementById("m2Input").value));
+
   if(!m2 || m2<=0) return alert("Ingresá m² válidos");
 
   const colorTexto = color ? color : "Color a definir";
+
   const f = n => Math.round(n).toString().replace(/\B(?=(\d{3})+(?!\d))/g,".");
 
-  const total = m2*20980;
+  const venT = m2*20980;
+  const venC = m2*25150;
 
-  document.getElementById("budget").innerHTML = `
-🏊 <b>${m2} m²</b> — ${colorTexto}<br><br>
-💰 Total: <b>$${f(total)}</b>
+  const cem = Math.ceil(m2/6);
+  const jun = Math.ceil(m2/25);
+
+  const matT = cem*37000 + jun*38000;
+  const matC = cem*41500 + jun*43000;
+
+  const totT = venT + matT;
+  const totC = venC + matC;
+
+  const txt = `
+<div class="block">
+🏊 <b>Presupuesto Neobind</b><br>
+${m2} m² — ${colorTexto}
+</div>
+
+<div class="block">
+📦 Envío GRATIS de venecitas
+</div>
+
+<div class="block">
+<div class="block-title">💎 Venecitas</div>
+Transferencia: $${f(venT)}<br>
+Tarjeta: $${f(venC)} (3× $${f(venC/3)})
+</div>
+
+<div class="block">
+<div class="block-title">🛠 Materiales</div>
+${cem} Cemenpox + ${jun} Cemento Blanco<br>
+Transferencia: $${f(matT)}<br>
+Tarjeta: $${f(matC)}
+</div>
+
+<div class="block">
+<div class="block-title">💰 Total</div>
+<span class="total-destacado">Transferencia: $${f(totT)}</span><br>
+Tarjeta: $${f(totC)} (3× $${f(totC/3)})
+</div>
+
+<div class="block">
+⚡ Cotización válida por 3 días
+</div>
 `;
 
-  document.getElementById("budget").style.display="block";
+  whatsappText =
+`🏊 *PRESUPUESTO NEOBIND*
+
+*${m2} m²* — ${colorTexto}
+
+📦 *Envío GRATIS de venecitas*
+
+💎 *Venecitas*
+• Transferencia: *$${f(venT)}*
+• Tarjeta: *$${f(venC)}*
+  (3× $${f(venC/3)})
+
+🛠 *Materiales*
+• ${cem} Cemenpox + ${jun} Cemento Blanco
+• Transferencia: *$${f(matT)}*
+• Tarjeta: *$${f(matC)}*
+
+💰 *TOTAL*
+• Transferencia: *$${f(totT)}*
+• Tarjeta: *$${f(totC)}*
+  (3× $${f(totC/3)})
+
+⚡ _Cotización válida por 3 días_`;
+
+  const out = document.getElementById("budget");
+  out.style.display="block";
+  out.innerHTML = txt;
+
+  document.getElementById("copyWA").style.display="block";
+  document.getElementById("wa").style.display="block";
+
+  document.getElementById("copyWA").onclick = async ()=>{
+    await navigator.clipboard.writeText(whatsappText);
+    alert("Copiado para WhatsApp ✅");
+  };
+
+  document.getElementById("wa").onclick = ()=>{
+    const msg = `Hola! Quiero avanzar con ${m2} m²${color ? ` en color ${color}` : ""}`;
+    const url = productId
+      ? `https://wa.me/p/${productId}/5493425945666?text=${encodeURIComponent(msg)}`
+      : `https://wa.me/5493425945666?text=${encodeURIComponent(msg)}`;
+    window.open(url,"_blank");
+  };
 }
 </script>
 
 </body>
 </html>
-
