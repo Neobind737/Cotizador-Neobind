@@ -15,11 +15,11 @@ body {
 
 .container {
   max-width: 520px;
-  margin: 50px auto;
+  margin: 40px auto;
   background: #fff;
-  padding: 32px;
+  padding: 28px;
   border-radius: 20px;
-  box-shadow: 0 20px 50px rgba(0,0,0,0.08);
+  box-shadow: 0 20px 60px rgba(0,0,0,0.08);
 }
 
 .logo {
@@ -29,7 +29,6 @@ body {
 
 .logo img {
   width:130px;
-  opacity:0.95;
 }
 
 h2 {
@@ -52,41 +51,76 @@ input {
   border-radius:12px;
   border:1px solid #ddd;
   font-size:16px;
-  margin-bottom:20px;
-}
-
-.colors {
-  display:grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap:12px;
   margin-bottom:25px;
 }
 
+/* 🔥 CARDS PREMIUM */
+.colors {
+  display:grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap:14px;
+}
+
 .color-card {
-  padding:14px;
-  border-radius:12px;
-  border:1px solid #eee;
+  position:relative;
+  height:120px;
+  border-radius:16px;
+  overflow:hidden;
   cursor:pointer;
-  text-align:center;
+  transition:0.3s;
+}
+
+.color-card img {
+  width:100%;
+  height:100%;
+  object-fit:cover;
+  transition:0.4s;
+}
+
+.color-card::after {
+  content:"";
+  position:absolute;
+  inset:0;
+  background:linear-gradient(to top, rgba(0,0,0,0.55), transparent);
+}
+
+.color-card::before {
+  content:"";
+  position:absolute;
+  inset:0;
+  background:linear-gradient(120deg, transparent 30%, rgba(255,255,255,0.2), transparent 70%);
+  opacity:0;
+  transition:0.4s;
+}
+
+.color-card:hover::before {
+  opacity:1;
+}
+
+.color-name {
+  position:absolute;
+  bottom:10px;
+  left:12px;
+  color:white;
+  font-weight:500;
   font-size:14px;
-  transition:0.2s;
+  z-index:2;
 }
 
 .color-card:hover {
-  transform:translateY(-3px);
+  transform:translateY(-4px);
+}
+
+.color-card:hover img {
+  transform:scale(1.05);
 }
 
 .color-card.selected {
-  border:2px solid #111;
+  outline:3px solid #111;
+  transform:scale(0.97);
 }
 
-.dot {
-  width:16px;
-  height:16px;
-  border-radius:50%;
-  margin:0 auto 6px;
-}
-
+/* BOTONES */
 button {
   width:100%;
   padding:16px;
@@ -96,13 +130,11 @@ button {
   color:white;
   font-size:16px;
   cursor:pointer;
-  transition:0.2s;
-  margin-top:10px;
+  margin-top:15px;
 }
 
 button:hover { 
   opacity:0.9; 
-  transform:translateY(-1px);
 }
 
 .budget {
@@ -115,26 +147,21 @@ button:hover {
   line-height:1.4;
 }
 
-.block {
-  margin-bottom:14px;
-}
-
-.block-title {
-  font-weight:600;
-  margin-bottom:4px;
-}
+.block { margin-bottom:14px; }
+.block-title { font-weight:600; }
 
 .total-destacado {
   font-weight:700;
   font-size:17px;
 }
 
-#wa {
-  background:#25D366;
-}
+#wa { background:#25D366; }
+#copyWA { background:#007AFF; }
 
-#copyWA {
-  background:#007AFF;
+@media (max-width:480px){
+  .color-card {
+    height:100px;
+  }
 }
 </style>
 </head>
@@ -144,7 +171,7 @@ button:hover {
 <div class="container">
 
 <div class="logo">
-  <img src="https://raw.githubusercontent.com/Neobind737/Cotizador-Neobind/main/NEO%20MARCA.png" alt="Neobind">
+<img src="https://raw.githubusercontent.com/Neobind737/Cotizador-Neobind/main/NEO%20MARCA.png">
 </div>
 
 <h2>Cotizá tu pileta</h2>
@@ -155,31 +182,38 @@ button:hover {
 <div class="colors">
 
 <div class="color-card" onclick="sel(this,'Blanco Nácar','3619704621491762')">
-  <div class="dot" style="background:#eaeaea"></div>Blanco Nácar
+<img src="https://raw.githubusercontent.com/Neobind737/Cotizador-Neobind/main/img/blanco.jpg">
+<div class="color-name">Blanco Nácar</div>
 </div>
 
 <div class="color-card" onclick="sel(this,'Agua Marina','3597377153718869')">
-  <div class="dot" style="background:#00bcd4"></div>Agua Marina
+<img src="https://raw.githubusercontent.com/Neobind737/Cotizador-Neobind/main/img/aguamarina.jpg">
+<div class="color-name">Agua Marina</div>
 </div>
 
 <div class="color-card" onclick="sel(this,'Turquesa','3856030544515788')">
-  <div class="dot" style="background:#00a9a5"></div>Turquesa
+<img src="https://raw.githubusercontent.com/Neobind737/Cotizador-Neobind/main/img/turquesa.jpg">
+<div class="color-name">Turquesa</div>
 </div>
 
 <div class="color-card" onclick="sel(this,'Azul','3620251704771327')">
-  <div class="dot" style="background:#007bff"></div>Azul
+<img src="https://raw.githubusercontent.com/Neobind737/Cotizador-Neobind/main/img/azul.jpg">
+<div class="color-name">Azul</div>
 </div>
 
 <div class="color-card" onclick="sel(this,'Verde Esmeralda','4295199693857459')">
-  <div class="dot" style="background:#28a745"></div>Verde Esmeralda
+<img src="https://raw.githubusercontent.com/Neobind737/Cotizador-Neobind/main/img/verde.jpg">
+<div class="color-name">Verde Esmeralda</div>
 </div>
 
 <div class="color-card" onclick="sel(this,'Negro','3511570448947533')">
-  <div class="dot" style="background:#222"></div>Negro
+<img src="https://raw.githubusercontent.com/Neobind737/Cotizador-Neobind/main/img/negro.jpg">
+<div class="color-name">Negro</div>
 </div>
 
 <div class="color-card" onclick="sel(this,'Gris','3580942102015676')">
-  <div class="dot" style="background:#6e6e6e"></div>Gris
+<img src="https://raw.githubusercontent.com/Neobind737/Cotizador-Neobind/main/img/gris.jpg">
+<div class="color-name">Gris</div>
 </div>
 
 </div>
@@ -201,18 +235,15 @@ let whatsappText = "";
 function sel(el, c, id){
   color = c;
   productId = id;
-
   document.querySelectorAll('.color-card').forEach(e=>e.classList.remove('selected'));
   el.classList.add('selected');
 }
 
 function calc(){
   const m2 = Math.ceil(parseFloat(document.getElementById("m2Input").value));
-
   if(!m2 || m2<=0) return alert("Ingresá m² válidos");
 
   const colorTexto = color ? color : "Color a definir";
-
   const f = n => Math.round(n).toString().replace(/\B(?=(\d{3})+(?!\d))/g,".");
 
   const venT = m2*20980;
@@ -228,66 +259,29 @@ function calc(){
   const totC = venC + matC;
 
   const txt = `
-<div class="block">
 🏊 <b>Presupuesto Neobind</b><br>
-${m2} m² — ${colorTexto}
-</div>
+${m2} m² — ${colorTexto}<br><br>
 
-<div class="block">
-📦 Envío GRATIS de venecitas
-</div>
+📦 Envío GRATIS<br><br>
 
-<div class="block">
-<div class="block-title">💎 Venecitas</div>
+💎 Venecitas<br>
 Transferencia: $${f(venT)}<br>
-Tarjeta: $${f(venC)} (3× $${f(venC/3)})
-</div>
+Tarjeta: $${f(venC)} (3× $${f(venC/3)})<br><br>
 
-<div class="block">
-<div class="block-title">🛠 Materiales</div>
+🛠 Materiales<br>
 ${cem} Cemenpox + ${jun} Cemento Blanco<br>
 Transferencia: $${f(matT)}<br>
-Tarjeta: $${f(matC)}
-</div>
+Tarjeta: $${f(matC)}<br><br>
 
-<div class="block">
-<div class="block-title">💰 Total</div>
+💰 <b>Total</b><br>
 <span class="total-destacado">Transferencia: $${f(totT)}</span><br>
 Tarjeta: $${f(totC)} (3× $${f(totC/3)})
-</div>
-
-<div class="block">
-⚡ Cotización válida por 3 días
-</div>
 `;
 
-  whatsappText =
-`🏊 *PRESUPUESTO NEOBIND*
+  whatsappText = txt.replace(/<br>/g,"\n").replace(/<b>|<\/b>/g,"*");
 
-*${m2} m²* — ${colorTexto}
-
-📦 *Envío GRATIS de venecitas*
-
-💎 *Venecitas*
-• Transferencia: *$${f(venT)}*
-• Tarjeta: *$${f(venC)}*
-  (3× $${f(venC/3)})
-
-🛠 *Materiales*
-• ${cem} Cemenpox + ${jun} Cemento Blanco
-• Transferencia: *$${f(matT)}*
-• Tarjeta: *$${f(matC)}*
-
-💰 *TOTAL*
-• Transferencia: *$${f(totT)}*
-• Tarjeta: *$${f(totC)}*
-  (3× $${f(totC/3)})
-
-⚡ _Cotización válida por 3 días_`;
-
-  const out = document.getElementById("budget");
-  out.style.display="block";
-  out.innerHTML = txt;
+  document.getElementById("budget").innerHTML = txt;
+  document.getElementById("budget").style.display="block";
 
   document.getElementById("copyWA").style.display="block";
   document.getElementById("wa").style.display="block";
@@ -298,10 +292,8 @@ Tarjeta: $${f(totC)} (3× $${f(totC/3)})
   };
 
   document.getElementById("wa").onclick = ()=>{
-    const msg = `Hola! Quiero avanzar con ${m2} m²${color ? ` en color ${color}` : ""}`;
-    const url = productId
-      ? `https://wa.me/p/${productId}/5493425945666?text=${encodeURIComponent(msg)}`
-      : `https://wa.me/5493425945666?text=${encodeURIComponent(msg)}`;
+    const msg = `Hola! Quiero avanzar con ${m2} m² en color ${colorTexto}`;
+    const url = `https://wa.me/5493425945666?text=${encodeURIComponent(msg)}`;
     window.open(url,"_blank");
   };
 }
