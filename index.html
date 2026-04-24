@@ -43,7 +43,7 @@ input {
   margin-bottom:25px;
 }
 
-/* 🎨 CARDS PREMIUM */
+/* 🎨 CARDS */
 .colors {
   display:grid;
   grid-template-columns: repeat(2, 1fr);
@@ -84,13 +84,8 @@ input {
   text-shadow: 0 2px 6px rgba(0,0,0,0.6);
 }
 
-.color-card:hover {
-  transform:translateY(-4px);
-}
-
-.color-card.selected {
-  outline:3px solid #111;
-}
+.color-card:hover { transform:translateY(-4px); }
+.color-card.selected { outline:3px solid #111; }
 
 /* BOTONES */
 button {
@@ -120,7 +115,13 @@ button {
 
 .block { margin-bottom:14px; }
 .block-title { font-weight:600; }
-.total-destacado { font-weight:700; font-size:17px; }
+
+/* ⭐ TOTAL MEJORADO */
+.total-destacado {
+  font-weight:800;
+  font-size:20px;
+  color:#0a7cff;
+}
 
 </style>
 </head>
@@ -175,7 +176,6 @@ button {
 <div class="color-name">Gris</div>
 </div>
 
-<!-- CATÁLOGO -->
 <div class="color-card" onclick="sel(this,'No definí aún','')">
 <img src="https://raw.githubusercontent.com/Neobind737/Cotizador-Neobind/main/img/catalogo.jpg">
 <div class="color-name">No definí aún</div>
@@ -216,7 +216,8 @@ function calc(){
   const venT = m2*20980;
   const venC = m2*25150;
 
-  const cem = Math.ceil(m2/6);
+  // ✅ CAMBIO: rendimiento 6.5 m2
+  const cem = Math.ceil(m2/6.5);
   const jun = Math.ceil(m2/25);
 
   const matT = cem*37000 + jun*38000;
@@ -259,6 +260,7 @@ Tarjeta: $${f(totC)} (3× $${f(totC/3)})
 </div>
 `;
 
+  // ✅ CAMBIO: tarjeta sin negrita
   whatsappText =
 `🏊 *PRESUPUESTO NEOBIND*
 
@@ -268,17 +270,17 @@ Tarjeta: $${f(totC)} (3× $${f(totC/3)})
 
 💎 *Venecitas*
 • Transferencia: *$${f(venT)}*
-• Tarjeta: *$${f(venC)}*
+• Tarjeta: $${f(venC)}
   (3× $${f(venC/3)})
 
 🛠 *Materiales*
 • ${cem} Cemenpox + ${jun} Cemento Blanco
 • Transferencia: *$${f(matT)}*
-• Tarjeta: *$${f(matC)}*
+• Tarjeta: $${f(matC)}
 
 💰 *TOTAL*
 • Transferencia: *$${f(totT)}*
-• Tarjeta: *$${f(totC)}*
+• Tarjeta: $${f(totC)}
   (3× $${f(totC/3)})
 
 ⚡ _Cotización válida por 3 días_`;
