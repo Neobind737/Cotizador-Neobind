@@ -123,6 +123,58 @@ button {
   color:#0a7cff;
 }
 
+/* 💰 TRANSFERENCIA DESTACADA */
+.transferencia-destacada {
+  background: #323232;
+  color:#fff;
+  padding:14px 16px;
+  border-radius:14px;
+}
+
+.transferencia-destacada .block-title {
+  color:#fff;
+  opacity:0.75;
+  font-size:12px;
+  text-transform:uppercase;
+  letter-spacing:0.5px;
+  margin-bottom:4px;
+}
+
+.valor-grande {
+  font-size:23px;
+  font-weight:800;
+  line-height:1.2;
+}
+
+/* 💳 PROMO 3 CUOTAS - MAS SUAVE */
+.promo-suave {
+  background:#f2f2f3;
+  border:1px solid #e6e6e7;
+  padding:12px 14px;
+  border-radius:12px;
+}
+
+.promo-suave .block-title {
+  font-size:12px;
+  color:#97979b;
+  text-transform:uppercase;
+  letter-spacing:0.5px;
+  margin-bottom:4px;
+  font-weight:600;
+}
+
+.valor-mediano {
+  font-size:16px;
+  font-weight:700;
+  color:#323232;
+}
+
+.promo-total-chico-suave {
+  font-size:12px;
+  color:#97979b;
+  margin-top:2px;
+}
+
 /* 🔥 PROMO 12 CUOTAS DESTACADA */
 .promo-destacada {
   background: linear-gradient(135deg, #3ebbce, #86ccd1);
@@ -216,9 +268,12 @@ button {
 <div id="budget" class="budget" style="display:none;"></div>
 
 <button id="copyWA" style="display:none;">📋 Copiar para WhatsApp</button>
+<button id="downloadImg" style="display:none;">📸 Descargar presupuesto (imagen)</button>
 <button id="wa" style="display:none;">📲 Quiero avanzar por WhatsApp</button>
 
 </div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
 
 <script>
 let color = "";
@@ -260,6 +315,10 @@ function calc(){
   const totD = venD + matD;
 
   const txt = `
+<div class="block" style="text-align:center; margin-bottom:18px;">
+<img src="https://raw.githubusercontent.com/Neobind737/Cotizador-Neobind/main/NEO%20MARCA.png" style="width:110px;" crossorigin="anonymous">
+</div>
+
 <div class="block">
 🏊 <b>Presupuesto Neobind</b><br>
 ${m2} m² — ${colorTexto}
@@ -271,17 +330,19 @@ Venecitas: $${f(venT)}<br>
 Materiales (${cem} Cemenpox + ${jun} Cemento Blanco): $${f(matT)}
 </div>
 
-<div class="block">
-<span class="total-destacado">💰 Total transferencia: $${f(totT)}</span>
+<div class="block transferencia-destacada">
+<div class="block-title">💰 Transferencia</div>
+<div class="valor-grande">$${f(totT)}</div>
 </div>
 
-<div class="block">
-<div class="block-title">💳 Promo 3 cuotas sin interés</div>
-$${f(totC)} (3× $${f(totC/3)})
+<div class="block promo-suave">
+<div class="block-title">💳 Promo 3 cuotas</div>
+<div class="valor-mediano">3× $${f(totC/3)}</div>
+<div class="promo-total-chico-suave">Total: $${f(totC)}</div>
 </div>
 
 <div class="block promo-destacada">
-<div class="block-title">🔥 Promo 12 cuotas sin interés</div>
+<div class="block-title">🔥 Promo 12 cuotas</div>
 <div class="promo-cuota-grande">12× $${f(totD/12)}</div>
 <div class="promo-total-chico">Total: $${f(totD)}</div>
 </div>
@@ -304,10 +365,10 @@ $${f(totC)} (3× $${f(totC/3)})
 
 ━━━━━━━━━━━━━━
 
-💳 *Promo 3 cuotas sin interés*
+💳 *Promo 3 cuotas*
 $${f(totC)}  (3× $${f(totC/3)})
 
-🔥 *PROMO 12 CUOTAS SIN INTERÉS* 🔥
+🔥 *PROMO 12 CUOTAS* 🔥
 👉 *12× $${f(totD/12)}*
 (Total: $${f(totD)})
 
@@ -318,11 +379,36 @@ $${f(totC)}  (3× $${f(totC/3)})
   out.innerHTML = txt;
 
   document.getElementById("copyWA").style.display="block";
+  document.getElementById("downloadImg").style.display="block";
   document.getElementById("wa").style.display="block";
 
   document.getElementById("copyWA").onclick = async ()=>{
     await navigator.clipboard.writeText(whatsappText);
     alert("Copiado para WhatsApp ✅");
+  };
+
+  document.getElementById("downloadImg").onclick = ()=>{
+    const btn = document.getElementById("downloadImg");
+    btn.disabled = true;
+    btn.textContent = "Generando imagen...";
+
+    html2canvas(document.getElementById("budget"), {
+      backgroundColor: "#ffffff",
+      scale: 2,
+      useCORS: true
+    }).then(canvas => {
+      const link = document.createElement("a");
+      link.download = `presupuesto-neobind-${m2}m2.png`;
+      link.href = canvas.toDataURL("image/png");
+      link.click();
+
+      btn.disabled = false;
+      btn.textContent = "📸 Descargar presupuesto (imagen)";
+    }).catch(err => {
+      alert("No se pudo generar la imagen. Probá de nuevo.");
+      btn.disabled = false;
+      btn.textContent = "📸 Descargar presupuesto (imagen)";
+    });
   };
 
   document.getElementById("wa").onclick = ()=>{
