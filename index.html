@@ -123,6 +123,34 @@ button {
   color:#0a7cff;
 }
 
+/* 🔥 PROMO 12 CUOTAS DESTACADA */
+.promo-destacada {
+  background: linear-gradient(135deg, #3ebbce, #86ccd1);
+  color:#fff;
+  padding:14px 16px;
+  border-radius:14px;
+}
+
+.promo-destacada .block-title {
+  color:#fff;
+  font-size:12px;
+  text-transform:uppercase;
+  letter-spacing:0.5px;
+  margin-bottom:4px;
+}
+
+.promo-cuota-grande {
+  font-size:23px;
+  font-weight:800;
+  line-height:1.2;
+}
+
+.promo-total-chico {
+  font-size:13px;
+  opacity:0.9;
+  margin-top:2px;
+}
+
 </style>
 </head>
 
@@ -238,28 +266,24 @@ ${m2} m² — ${colorTexto}
 </div>
 
 <div class="block">
+<div class="block-title">Detalle (precio transferencia)</div>
+Venecitas: $${f(venT)}<br>
+Materiales (${cem} Cemenpox + ${jun} Cemento Blanco): $${f(matT)}
 </div>
 
 <div class="block">
-<div class="block-title">💎 Venecitas</div>
-Transferencia: $${f(venT)}<br>
-Tarjeta 3 cuotas: $${f(venC)} (3× $${f(venC/3)})<br>
-Tarjeta 12 cuotas: $${f(venD)} (12× $${f(venD/12)})
+<span class="total-destacado">💰 Total transferencia: $${f(totT)}</span>
 </div>
 
 <div class="block">
-<div class="block-title">🛠 Materiales</div>
-${cem} Cemenpox + ${jun} Cemento Blanco<br>
-Transferencia: $${f(matT)}<br>
-Tarjeta 3 cuotas: $${f(matC)}<br>
-Tarjeta 12 cuotas: $${f(matD)}
+<div class="block-title">💳 Promo 3 cuotas sin interés</div>
+$${f(totC)} (3× $${f(totC/3)})
 </div>
 
-<div class="block">
-<div class="block-title">💰 Total</div>
-<span class="total-destacado">Transferencia: $${f(totT)}</span><br>
-Tarjeta 3 cuotas: $${f(totC)} (3× $${f(totC/3)})<br>
-Tarjeta 12 cuotas: $${f(totD)} (12× $${f(totD/12)})
+<div class="block promo-destacada">
+<div class="block-title">🔥 Promo 12 cuotas sin interés</div>
+<div class="promo-cuota-grande">12× $${f(totD/12)}</div>
+<div class="promo-total-chico">Total: $${f(totD)}</div>
 </div>
 
 <div class="block">
@@ -272,25 +296,20 @@ Tarjeta 12 cuotas: $${f(totD)} (12× $${f(totD/12)})
 
 *${m2} m²* — ${colorTexto}
 
-💎 *Venecitas*
-• Transferencia: *$${f(venT)}*
-• 3 cuotas: $${f(venC)}
-  (3× $${f(venC/3)})
-• 12 cuotas: $${f(venD)}
-  (12× $${f(venD/12)})
+*Detalle (precio transferencia)*
+• Venecitas: $${f(venT)}
+• Materiales (${cem} Cemenpox + ${jun} Cemento Blanco): $${f(matT)}
 
-🛠 *Materiales*
-• ${cem} Cemenpox + ${jun} Cemento Blanco
-• Transferencia: *$${f(matT)}*
-• 3 cuotas: $${f(matC)}
-• 12 cuotas: $${f(matD)}
+💰 *TOTAL TRANSFERENCIA: $${f(totT)}*
 
-💰 *TOTAL*
-• Transferencia: *$${f(totT)}*
-• 3 cuotas: $${f(totC)}
-  (3× $${f(totC/3)})
-• 12 cuotas: $${f(totD)}
-  (12× $${f(totD/12)})
+━━━━━━━━━━━━━━
+
+💳 *Promo 3 cuotas sin interés*
+$${f(totC)}  (3× $${f(totC/3)})
+
+🔥 *PROMO 12 CUOTAS SIN INTERÉS* 🔥
+👉 *12× $${f(totD/12)}*
+(Total: $${f(totD)})
 
 ⚡ _Cotización válida por 3 días_`;
 
