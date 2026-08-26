@@ -213,18 +213,23 @@ function calc(){
 
   const f = n => Math.round(n).toString().replace(/\B(?=(\d{3})+(?!\d))/g,".");
 
-  const venT = m2*20980;
-  const venC = m2*25150;
+  // 💎 Venecitas (precio por m²)
+  const venT = m2*20980;   // Transferencia
+  const venC = m2*24100;   // 3 cuotas sin interés
+  const venD = m2*31750;   // 12 cuotas sin interés
 
-  // ✅ CAMBIO: rendimiento 6.5 m2
+  // 🛠 Materiales
   const cem = Math.ceil(m2/6.5);
   const jun = Math.ceil(m2/25);
 
-  const matT = cem*37000 + jun*38000;
-  const matC = cem*41500 + jun*43000;
+  const matT = cem*37000 + jun*38000;   // Transferencia
+  const matC = cem*42500 + jun*43650;   // 3 cuotas sin interés
+  const matD = cem*56000 + jun*57500;   // 12 cuotas sin interés
 
+  // 💰 Totales
   const totT = venT + matT;
   const totC = venC + matC;
+  const totD = venD + matD;
 
   const txt = `
 <div class="block">
@@ -238,20 +243,23 @@ ${m2} m² — ${colorTexto}
 <div class="block">
 <div class="block-title">💎 Venecitas</div>
 Transferencia: $${f(venT)}<br>
-Tarjeta: $${f(venC)} (3× $${f(venC/3)})
+Tarjeta 3 cuotas: $${f(venC)} (3× $${f(venC/3)})<br>
+Tarjeta 12 cuotas: $${f(venD)} (12× $${f(venD/12)})
 </div>
 
 <div class="block">
 <div class="block-title">🛠 Materiales</div>
 ${cem} Cemenpox + ${jun} Cemento Blanco<br>
 Transferencia: $${f(matT)}<br>
-Tarjeta: $${f(matC)}
+Tarjeta 3 cuotas: $${f(matC)}<br>
+Tarjeta 12 cuotas: $${f(matD)}
 </div>
 
 <div class="block">
 <div class="block-title">💰 Total</div>
 <span class="total-destacado">Transferencia: $${f(totT)}</span><br>
-Tarjeta: $${f(totC)} (3× $${f(totC/3)})
+Tarjeta 3 cuotas: $${f(totC)} (3× $${f(totC/3)})<br>
+Tarjeta 12 cuotas: $${f(totD)} (12× $${f(totD/12)})
 </div>
 
 <div class="block">
@@ -259,7 +267,6 @@ Tarjeta: $${f(totC)} (3× $${f(totC/3)})
 </div>
 `;
 
-  // ✅ CAMBIO: tarjeta sin negrita
   whatsappText =
 `🏊 *PRESUPUESTO NEOBIND*
 
@@ -267,18 +274,23 @@ Tarjeta: $${f(totC)} (3× $${f(totC/3)})
 
 💎 *Venecitas*
 • Transferencia: *$${f(venT)}*
-• Tarjeta: $${f(venC)}
+• 3 cuotas: $${f(venC)}
   (3× $${f(venC/3)})
+• 12 cuotas: $${f(venD)}
+  (12× $${f(venD/12)})
 
 🛠 *Materiales*
 • ${cem} Cemenpox + ${jun} Cemento Blanco
 • Transferencia: *$${f(matT)}*
-• Tarjeta: $${f(matC)}
+• 3 cuotas: $${f(matC)}
+• 12 cuotas: $${f(matD)}
 
 💰 *TOTAL*
 • Transferencia: *$${f(totT)}*
-• Tarjeta: $${f(totC)}
+• 3 cuotas: $${f(totC)}
   (3× $${f(totC/3)})
+• 12 cuotas: $${f(totD)}
+  (12× $${f(totD/12)})
 
 ⚡ _Cotización válida por 3 días_`;
 
