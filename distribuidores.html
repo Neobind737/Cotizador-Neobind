@@ -532,7 +532,7 @@ table.doc-table tr:nth-child(even) td{ background:#f2fbfc; }
 const DISTRIBUIDORES = {
   rodrigo:  { nombre:"Rodrigo Negrete",     zona:"Córdoba",                       telefono:"+54 9 3548 50-0669" },
   ignacio:  { nombre:"Ignacio Annunziata", zona:"Rosario y zona",                telefono:"+54 9 3415 04-8093" },
-  pablo:    { nombre:"Pablo Gomez",         zona:"Buenos Aires",                  telefono:"+54 9 11 6241-3782" },
+  pablo:    { nombre:"Pablo Gomez",         zona:"Buenos Aires",                  telefono:"+54 9 11 6241-3782" , combinarMateriales:true},
   sergio:   { nombre:"Sergio Donato",       zona:"Buenos Aires",                  telefono:"+54 9 2213 00-3298" },
   fabricio: { nombre:"Fabricio Gomez",      zona:"Mendoza",                       telefono:"+54 9 2604 41-6161" },
   manuel:   { nombre:"Manuel Gastaldi",     zona:"Santa Fe/Paraná",               telefono:"+54 9 3424 05-9180" },
@@ -651,7 +651,16 @@ function generar(){
     </div>`;
   }
 
-  let filasAdicionales = adicionales.map(a =>
+  // Pablo Gomez pidió que Venecitas y Materiales salgan combinados en una sola fila
+    let filasProductos;
+    if(distribuidorActivo && distribuidorActivo.combinarMateriales){
+          filasProductos = `<tr><td>Materiales (Venecitas Neobind + adhesivo y pastina)</td><td>${m2}</td><td>$${f(costoVen+costoMat)}</td><td>$${f(venTotal+matTotal)}</td></tr>`;
+    } else {
+          filasProductos = `<tr><td>Venecitas Neobind</td><td>${m2}</td><td>$${f(costoVen)}</td><td>$${f(venTotal)}</td></tr>
+                  <tr><td>Materiales de colocación</td><td>${m2}</td><td>$${f(costoMat)}</td><td>$${f(matTotal)}</td></tr>`;
+    }
+  
+    let filasAdicionales = adicionales.map(a =>
     `<tr><td>${a.label}</td><td>—</td><td>—</td><td>$${f(a.monto)}</td></tr>`
   ).join("");
 
@@ -713,8 +722,7 @@ function generar(){
     <table class="doc-table">
       <thead><tr><th>Concepto</th><th>m²</th><th>$/m²</th><th>Total</th></tr></thead>
       <tbody>
-        <tr><td>Venecitas Neobind</td><td>${m2}</td><td>$${f(costoVen)}</td><td>$${f(venTotal)}</td></tr>
-        <tr><td>Materiales de colocación</td><td>${m2}</td><td>$${f(costoMat)}</td><td>$${f(matTotal)}</td></tr>
+        ${filasProductos}
       </tbody>
     </table>
     <div class="doc-subtotal">Subtotal materiales: $${f(subtotalProductos)}</div>
