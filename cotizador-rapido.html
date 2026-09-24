@@ -66,6 +66,18 @@
     margin:0 4px;
     box-sizing:border-box;
   }
+  .copy-btn{
+    width:100%;
+    padding:13px;
+    border:none;
+    border-radius:10px;
+    background:#25D366;
+    color:#fff;
+    font-weight:700;
+    font-size:14px;
+    cursor:pointer;
+    margin-top:16px;
+  }
 </style>
 </head>
 <body>
@@ -97,6 +109,8 @@
       <div class="total-value" id="totalGeneral"></div>
     </div>
   </div>
+
+  <button id="copyBtn" class="copy-btn" style="display:none;" onclick="copiarTexto()">📋 Copiar cotización para WhatsApp</button>
 
   <div class="footer-note">Precios sujetos a actualización</div>
 </div>
@@ -131,6 +145,7 @@ function calcular(){
 
   if(!m2 || m2 <= 0){
     document.getElementById("resultados").style.display = "none";
+    document.getElementById("copyBtn").style.display = "none";
     return;
   }
 
@@ -148,6 +163,7 @@ function actualizarTotales(){
 
   if(!m2 || m2 <= 0){
     document.getElementById("resultados").style.display = "none";
+    document.getElementById("copyBtn").style.display = "none";
     return;
   }
 
@@ -171,6 +187,37 @@ function actualizarTotales(){
   document.getElementById("totalGeneral").textContent = `$${f(total)}`;
 
   document.getElementById("resultados").style.display = "block";
+  document.getElementById("copyBtn").style.display = "block";
+}
+
+function copiarTexto(){
+  const m2 = document.getElementById("m2Input").value;
+  const bolsasCem = document.getElementById("cemenpoxUnidInput").value;
+  const bolsasCB = document.getElementById("cbUnidInput").value;
+  const totalVen = document.getElementById("totalVen").textContent;
+  const totalCem = document.getElementById("totalCem").textContent;
+  const totalCB = document.getElementById("totalCB").textContent;
+  const totalGeneral = document.getElementById("totalGeneral").textContent;
+
+  const texto = `*Cotización Neobind*
+Superficie: ${m2} m²
+
+Venecitas Neobind: ${totalVen}
+Cemenpox (${bolsasCem} bolsas): $${totalCem}
+Cemento Blanco (${bolsasCB} bolsas): $${totalCB}
+
+*Total: ${totalGeneral}*
+
+Precios sujetos a actualización.`;
+
+  navigator.clipboard.writeText(texto).then(() => {
+    const btn = document.getElementById("copyBtn");
+    const original = btn.textContent;
+    btn.textContent = "✅ Copiado";
+    setTimeout(() => { btn.textContent = original; }, 2000);
+  }).catch(() => {
+    alert("No se pudo copiar. Probá de nuevo o copiá manualmente.");
+  });
 }
 </script>
 
