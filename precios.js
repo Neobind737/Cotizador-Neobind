@@ -18,7 +18,7 @@ cemenpox: 37000,
 cementoBlanco: 38000
 },
 comercio1: {
-oeste: { nombre: "Oeste Piscinas", venecita: 16000, cemenpox: 28000, cementoBlanco: 32000 }
+distri105: { nombre: "DISTRI 10.5", venecita: 16000, cemenpox: 28000, cementoBlanco: 32000 }
 },
 comercio2: {
 venecita: 17545,
