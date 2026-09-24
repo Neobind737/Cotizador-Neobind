@@ -9,7 +9,7 @@ cuotas3: 0.08,
 cuotas12: 0.29
 },
 rendimientos: {
-cemenpoxM2PorBolsa: 6.25,
+cemenpoxM2PorBolsa: 6.5,
 cementoBlancoM2PorBolsa: 25
 },
 consumidorFinal: {
