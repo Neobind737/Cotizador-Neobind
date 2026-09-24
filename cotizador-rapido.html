@@ -56,6 +56,16 @@
   .total-label{ font-size:15px; color:#333; }
   .total-value{ font-size:26px; font-weight:800; color:#111; }
   .footer-note{ text-align:center; font-size:11.5px; color:#97979b; margin-top:18px; }
+  .unid-input{
+    width:50px;
+    padding:4px 6px;
+    border-radius:6px;
+    border:1px solid #ccc;
+    font-size:13px;
+    text-align:center;
+    margin:0 4px;
+    box-sizing:border-box;
+  }
 </style>
 </head>
 <body>
@@ -64,7 +74,7 @@
   <h2>Cotizador de revestimientos</h2>
 
   <label>Cliente</label>
-  <select id="clienteSelect" onchange="calcular()"></select>
+  <select id="clienteSelect" onchange="actualizarTotales()"></select>
 
   <label>Metros cuadrados</label>
   <input id="m2Input" type="number" placeholder="ej: 50" oninput="calcular()">
@@ -76,11 +86,11 @@
     </div>
     <div class="row">
       <div class="row-label">Cemenpox <span class="row-price" id="precioCem"></span></div>
-      <div class="row-value" id="totalCem"></div>
+      <div class="row-value"><input type="number" id="cemenpoxUnidInput" class="unid-input" oninput="actualizarTotales()"> bolsas = $<span id="totalCem"></span></div>
     </div>
     <div class="row">
       <div class="row-label">Cemento Blanco <span class="row-price" id="precioCB"></span></div>
-      <div class="row-value" id="totalCB"></div>
+      <div class="row-value"><input type="number" id="cbUnidInput" class="unid-input" oninput="actualizarTotales()"> bolsas = $<span id="totalCB"></span></div>
     </div>
     <div class="total-row">
       <div class="total-label">Total</div>
@@ -97,7 +107,7 @@
 // Además agregamos la lista estándar de distribuidores (Comercio 2) como una
 // opción más del desplegable, para no tener que duplicar esos 3 precios acá.
 const CLIENTES = { ...PRECIOS.comercio1 };
-CLIENTES.comercio2 = { nombre: "Distribuidores (lista estándar)", ...PRECIOS.comercio2 };
+CLIENTES.comercio2 = { nombre: "DISTRI IVA INCLUIDO", ...PRECIOS.comercio2 };
 
 const REND_CEMENPOX = PRECIOS.rendimientos.cemenpoxM2PorBolsa;
 const REND_CB = PRECIOS.rendimientos.cementoBlancoM2PorBolsa;
@@ -117,6 +127,21 @@ window.addEventListener("DOMContentLoaded", () => {
 });
 
 function calcular(){
+  const m2 = parseFloat(document.getElementById("m2Input").value);
+
+  if(!m2 || m2 <= 0){
+    document.getElementById("resultados").style.display = "none";
+    return;
+  }
+
+  // Sugerimos la cantidad de bolsas según los m², pero quedan editables
+  document.getElementById("cemenpoxUnidInput").value = Math.ceil(m2 / REND_CEMENPOX);
+  document.getElementById("cbUnidInput").value = Math.ceil(m2 / REND_CB);
+
+  actualizarTotales();
+}
+
+function actualizarTotales(){
   const key = document.getElementById("clienteSelect").value;
   const c = CLIENTES[key];
   const m2 = parseFloat(document.getElementById("m2Input").value);
@@ -126,10 +151,11 @@ function calcular(){
     return;
   }
 
+  const bolsasCem = parseFloat(document.getElementById("cemenpoxUnidInput").value) || 0;
+  const bolsasCB = parseFloat(document.getElementById("cbUnidInput").value) || 0;
+
   const totalVen = m2 * c.venecita;
-  const bolsasCem = Math.ceil(m2 / REND_CEMENPOX);
   const totalCem = bolsasCem * c.cemenpox;
-  const bolsasCB = Math.ceil(m2 / REND_CB);
   const totalCB = bolsasCB * c.cementoBlanco;
   const total = totalVen + totalCem + totalCB;
 
@@ -137,10 +163,10 @@ function calcular(){
   document.getElementById("totalVen").textContent = `$${f(totalVen)}`;
 
   document.getElementById("precioCem").textContent = `($${f(c.cemenpox)})`;
-  document.getElementById("totalCem").textContent = `${bolsasCem} bolsas — $${f(totalCem)}`;
+  document.getElementById("totalCem").textContent = f(totalCem);
 
   document.getElementById("precioCB").textContent = `($${f(c.cementoBlanco)})`;
-  document.getElementById("totalCB").textContent = `${bolsasCB} bolsas — $${f(totalCB)}`;
+  document.getElementById("totalCB").textContent = f(totalCB);
 
   document.getElementById("totalGeneral").textContent = `$${f(total)}`;
 
