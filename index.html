@@ -274,6 +274,7 @@ button {
 </div>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+  <script src="precios.js"></script>
 
 <script>
 let color = "";
@@ -297,17 +298,17 @@ function calc(){
   const f = n => Math.round(n).toString().replace(/\B(?=(\d{3})+(?!\d))/g,".");
 
   // 💎 Venecitas (precio por m²)
-  const venT = m2*20980;   // Transferencia
-  const venC = m2*24100;   // 3 cuotas sin interés
-  const venD = m2*31750;   // 12 cuotas sin interés
+  const venT = m2*PRECIOS.consumidorFinal.venecita;   // Transferencia
+    const venC = m2*precioCuotas(PRECIOS.consumidorFinal.venecita, PRECIOS.financiero.cuotas3);   // 3 cuotas sin interés
+    const venD = m2*precioCuotas(PRECIOS.consumidorFinal.venecita, PRECIOS.financiero.cuotas12);   // 12 cuotas sin interés
 
-  // 🛠 Materiales
-  const cem = Math.ceil(m2/6.5);
-  const jun = Math.ceil(m2/25);
+    // 🛠 Materiales
+    const cem = Math.ceil(m2/PRECIOS.rendimientos.cemenpoxM2PorBolsa);
+    const jun = Math.ceil(m2/PRECIOS.rendimientos.cementoBlancoM2PorBolsa);
 
-  const matT = cem*37000 + jun*38000;   // Transferencia
-  const matC = cem*42500 + jun*43650;   // 3 cuotas sin interés
-  const matD = cem*56000 + jun*57500;   // 12 cuotas sin interés
+    const matT = cem*PRECIOS.consumidorFinal.cemenpox + jun*PRECIOS.consumidorFinal.cementoBlanco;   // Transferencia
+    const matC = cem*precioCuotas(PRECIOS.consumidorFinal.cemenpox, PRECIOS.financiero.cuotas3) + jun*precioCuotas(PRECIOS.consumidorFinal.cementoBlanco, PRECIOS.financiero.cuotas3);   // 3 cuotas sin interés
+    const matD = cem*precioCuotas(PRECIOS.consumidorFinal.cemenpox, PRECIOS.financiero.cuotas12) + jun*precioCuotas(PRECIOS.consumidorFinal.cementoBlanco, PRECIOS.financiero.cuotas12);   // 12 cuotas sin interés
 
   // 💰 Totales
   const totT = venT + matT;
