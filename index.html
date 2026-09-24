@@ -263,7 +263,12 @@ button {
 
 </div>
 
-<button onclick="calc()">Calcular presupuesto</button>
+<label style="display:flex; align-items:center; gap:8px; font-size:14px; margin:12px 0; cursor:pointer;">
+  <input type="checkbox" id="soloVenecitas" style="width:auto;">
+  Cotizar solo Venecitas (sin materiales de instalación)
+</label>
+  
+  <button onclick="calc()">Calcular presupuesto</button>
 
 <div id="budget" class="budget" style="display:none;"></div>
 
@@ -293,6 +298,8 @@ function calc(){
 
   if(!m2 || m2<=0) return alert("Ingresá m² válidos");
 
+    const soloVenecitas = document.getElementById("soloVenecitas").checked;
+
   const colorTexto = color ? color : "Color a definir";
 
   const f = n => Math.round(n).toString().replace(/\B(?=(\d{3})+(?!\d))/g,".");
@@ -303,15 +310,18 @@ function calc(){
     const venD = m2*precioCuotas(PRECIOS.consumidorFinal.venecita, PRECIOS.financiero.cuotas12);   // 12 cuotas sin interés
 
     // 🛠 Materiales
-    const cem = Math.ceil(m2/PRECIOS.rendimientos.cemenpoxM2PorBolsa);
-    const jun = Math.ceil(m2/PRECIOS.rendimientos.cementoBlancoM2PorBolsa);
+const cem = soloVenecitas ? 0 : Math.ceil(m2/PRECIOS.rendimientos.cemenpoxM2PorBolsa);
+    const jun = soloVenecitas ? 0 : Math.ceil(m2/PRECIOS.rendimientos.cementoBlancoM2PorBolsa);
 
-    const matT = cem*PRECIOS.consumidorFinal.cemenpox + jun*PRECIOS.consumidorFinal.cementoBlanco;   // Transferencia
-    const matC = cem*precioCuotas(PRECIOS.consumidorFinal.cemenpox, PRECIOS.financiero.cuotas3) + jun*precioCuotas(PRECIOS.consumidorFinal.cementoBlanco, PRECIOS.financiero.cuotas3);   // 3 cuotas sin interés
-    const matD = cem*precioCuotas(PRECIOS.consumidorFinal.cemenpox, PRECIOS.financiero.cuotas12) + jun*precioCuotas(PRECIOS.consumidorFinal.cementoBlanco, PRECIOS.financiero.cuotas12);   // 12 cuotas sin interés
+    const matT = soloVenecitas ? 0 : (cem*PRECIOS.consumidorFinal.cemenpox + jun*PRECIOS.consumidorFinal.cementoBlanco);   // Transferencia
+    const matC = soloVenecitas ? 0 : (cem*precioCuotas(PRECIOS.consumidorFinal.cemenpox, PRECIOS.financiero.cuotas3) + jun*precioCuotas(PRECIOS.consumidorFinal.cementoBlanco, PRECIOS.financiero.cuotas3));   // 3 cuotas sin interés
+    const matD = soloVenecitas ? 0 : (cem*precioCuotas(PRECIOS.consumidorFinal.cemenpox, PRECIOS.financiero.cuotas12) + jun*precioCuotas(PRECIOS.consumidorFinal.cementoBlanco, PRECIOS.financiero.cuotas12));   // 12 cuotas sin interés
 
   // 💰 Totales
   const totT = venT + matT;
+
+    const detalleMateriales = soloVenecitas ? "" : `<br>Materiales (${cem} Cemenpox + ${jun} Cemento Blanco): $${f(matT)}`;
+    const detalleMaterialesWA = soloVenecitas ? "" : `\n• Materiales (${cem} Cemenpox + ${jun} Cemento Blanco): $${f(matT)}`;
   const totC = venC + matC;
   const totD = venD + matD;
 
@@ -327,8 +337,7 @@ ${m2} m² — ${colorTexto}
 
 <div class="block">
 <div class="block-title">Detalle (precio transferencia)</div>
-Venecitas: $${f(venT)}<br>
-Materiales (${cem} Cemenpox + ${jun} Cemento Blanco): $${f(matT)}
+Venecitas: $${f(venT)}${detalleMateriales}
 </div>
 
 <div class="block transferencia-destacada">
@@ -359,8 +368,7 @@ Materiales (${cem} Cemenpox + ${jun} Cemento Blanco): $${f(matT)}
 *${m2} m²* — ${colorTexto}
 
 *Detalle (precio transferencia)*
-• Venecitas: $${f(venT)}
-• Materiales (${cem} Cemenpox + ${jun} Cemento Blanco): $${f(matT)}
+• Venecitas: $${f(venT)}${detalleMaterialesWA}
 
 💰 *TOTAL TRANSFERENCIA: $${f(totT)}*
 
