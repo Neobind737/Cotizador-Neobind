@@ -592,13 +592,23 @@ table.doc-table tr:nth-child(even) td{ background:#f2fbfc; }
   <button id="printBtn" onclick="window.print()" style="display:none;">📄 Descargar presupuesto (PDF)</button>
 </div>
 
-<script>
+<script src="precios.js"></script>
+  
+  <script>
 const DIST_NOMBRE = "Gerardo Mariani";
 const DIST_TITULO = "Distribuidor Neobind Zona Norte GBA";
 const DIST_TELEFONO = "+54 9 11 5949-1406";
 
 let color = "";
 let colorImgUrl = "";
+
+    window.addEventListener("DOMContentLoaded", () => {
+      document.getElementById("costoVenecitaA").value = PRECIOS.distribuidorDefault.venecita;
+      document.getElementById("costoMaterialesA").value = PRECIOS.distribuidorDefault.materiales;
+      document.getElementById("costoVenecitaB").value = PRECIOS.distribuidorDefault.venecita;
+      document.getElementById("costoMaterialesB").value = PRECIOS.distribuidorDefault.materiales;
+      document.getElementById("costoColocacionB").value = PRECIOS.distribuidorDefault.colocacion;
+    });
 
 function selColor(el, nombre, imgUrl){
   color = nombre;
