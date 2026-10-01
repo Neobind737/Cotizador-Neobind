@@ -341,8 +341,8 @@ const cem = soloVenecitas ? 0 : Math.ceil(m2/PRECIOS.rendimientos.cemenpoxM2PorB
     const detalleMateriales = soloVenecitas ? "" : `<br>Materiales (${cem} Cemenpox + ${jun} Cemento Blanco): $${f(matT)}`;
     const detalleMaterialesWA = soloVenecitas ? "" : `\n• Materiales (${cem} Cemenpox + ${jun} Cemento Blanco): $${f(matT)}`;
 
-  const envioDisclaimer = incluirEnvio ? `<div class="block">📦 Esta cotización incluye el envío a domicilio del pallet completo (Venecitas + materiales de instalación) a su domicilio.</div>` : "";
-  const envioDisclaimerWA = incluirEnvio ? `\n\n📦 _Esta cotización incluye el envío a domicilio del pallet completo (Venecitas + materiales de instalación) a su domicilio._` : "";
+  const envioDisclaimer = incluirEnvio ? `<div class="block">📦 Esta cotización incluye el envío del pallet completo (Venecitas + materiales de instalación) a su domicilio.</div>` : "";
+  const envioDisclaimerWA = incluirEnvio ? `\n\n📦 _Esta cotización incluye el envío del pallet completo (Venecitas + materiales de instalación) a su domicilio._` : "";
   const totC = venC + matC + envioC;
   const totD = venD + matD + envioD;
 
