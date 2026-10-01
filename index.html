@@ -267,6 +267,14 @@ button {
   <input type="checkbox" id="soloVenecitas" style="width:auto;">
   Cotizar solo Venecitas (sin materiales de instalación)
 </label>
+
+<div id="panelAdmin" style="display:none; background:#fff7e6; border:1px solid #f0c36d; border-radius:12px; padding:14px; margin:12px 0;">
+  <label style="display:flex; align-items:center; gap:8px; font-size:14px; margin-bottom:8px; cursor:pointer;">
+    <input type="checkbox" id="incluirEnvio" style="width:auto;">
+    Incluir envío (el monto no se muestra al cliente)
+  </label>
+  <input type="number" id="montoEnvio" placeholder="Monto del envío">
+</div>
   
   <button onclick="calc()">Calcular presupuesto</button>
 
@@ -286,6 +294,10 @@ let color = "";
 let productId = "";
 let whatsappText = "";
 
+if(new URLSearchParams(window.location.search).get("admin") === "1"){
+  document.getElementById("panelAdmin").style.display = "block";
+}
+
 function sel(el, c, id){
   color = c;
   productId = id;
@@ -299,6 +311,12 @@ function calc(){
   if(!m2 || m2<=0) return alert("Ingresá m² válidos");
 
     const soloVenecitas = document.getElementById("soloVenecitas").checked;
+
+  const montoEnvio = parseFloat(document.getElementById("montoEnvio").value) || 0;
+  const incluirEnvio = document.getElementById("incluirEnvio").checked && montoEnvio > 0;
+  const envioT = incluirEnvio ? montoEnvio : 0;
+  const envioC = incluirEnvio ? precioCuotas(montoEnvio, PRECIOS.financiero.cuotas3) : 0;
+  const envioD = incluirEnvio ? precioCuotas(montoEnvio, PRECIOS.financiero.cuotas12) : 0;
 
   const colorTexto = color ? color : "Color a definir";
 
@@ -318,12 +336,15 @@ const cem = soloVenecitas ? 0 : Math.ceil(m2/PRECIOS.rendimientos.cemenpoxM2PorB
     const matD = soloVenecitas ? 0 : (cem*precioCuotas(PRECIOS.consumidorFinal.cemenpox, PRECIOS.financiero.cuotas12) + jun*precioCuotas(PRECIOS.consumidorFinal.cementoBlanco, PRECIOS.financiero.cuotas12));   // 12 cuotas sin interés
 
   // 💰 Totales
-  const totT = venT + matT;
+  const totT = venT + matT + envioT;
 
     const detalleMateriales = soloVenecitas ? "" : `<br>Materiales (${cem} Cemenpox + ${jun} Cemento Blanco): $${f(matT)}`;
     const detalleMaterialesWA = soloVenecitas ? "" : `\n• Materiales (${cem} Cemenpox + ${jun} Cemento Blanco): $${f(matT)}`;
-  const totC = venC + matC;
-  const totD = venD + matD;
+
+  const envioDisclaimer = incluirEnvio ? `<div class="block">📦 Esta cotización incluye el envío a domicilio del pallet completo (Venecitas + materiales de instalación) a su domicilio.</div>` : "";
+  const envioDisclaimerWA = incluirEnvio ? `\n\n📦 _Esta cotización incluye el envío a domicilio del pallet completo (Venecitas + materiales de instalación) a su domicilio._` : "";
+  const totC = venC + matC + envioC;
+  const totD = venD + matD + envioD;
 
   const txt = `
 <div class="block" style="text-align:center; margin-bottom:18px;">
@@ -357,6 +378,8 @@ Venecitas: $${f(venT)}${detalleMateriales}
 <div class="promo-total-chico">Total: $${f(totD)}</div>
 </div>
 
+${envioDisclaimer}
+
 <div class="block">
 ⚡ Cotización válida por 3 días
 </div>
@@ -381,7 +404,7 @@ $${f(totC)}  (3× $${f(totC/3)})
 👉 *12× $${f(totD/12)}*
 (Total: $${f(totD)})
 
-⚡ _Cotización válida por 3 días_`;
+⚡ _Cotización válida por 3 días_${envioDisclaimerWA}`;
 
   const out = document.getElementById("budget");
   out.style.display="block";
