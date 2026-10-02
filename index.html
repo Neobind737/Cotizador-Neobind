@@ -203,6 +203,26 @@ button {
   margin-top:2px;
 }
 
+/* 🎉 DESCUENTO */
+.precio-tachado {
+  text-decoration: line-through;
+  opacity:0.65;
+  font-size:14px;
+  margin-bottom:4px;
+}
+
+.descuento-badge {
+  display:inline-block;
+  background:#16a34a;
+  color:#fff;
+  font-weight:800;
+  font-size:12px;
+  padding:5px 12px;
+  border-radius:20px;
+  margin-bottom:8px;
+  letter-spacing:0.3px;
+}
+
 </style>
 </head>
 
@@ -274,6 +294,20 @@ button {
     Incluir envío (el monto no se muestra al cliente)
   </label>
   <input type="number" id="montoEnvio" placeholder="Monto del envío">
+
+  <div style="margin-top:14px; padding-top:14px; border-top:1px solid #f0c36d;">
+    <label style="display:flex; align-items:center; gap:8px; font-size:14px; margin-bottom:8px; cursor:pointer;">
+      <input type="checkbox" id="incluirDescuento" style="width:auto;">
+      Aplicar descuento (se muestra al cliente, resaltado)
+    </label>
+    <div style="display:flex; gap:8px;">
+      <select id="tipoDescuento" style="width:auto; padding:10px; border-radius:10px; border:1px solid #ddd; font-size:14px; margin-bottom:0;">
+        <option value="porcentaje">%</option>
+        <option value="monto">$ fijo</option>
+      </select>
+      <input type="number" id="valorDescuento" placeholder="Valor del descuento" style="flex:1; margin-bottom:0; padding:10px;">
+    </div>
+  </div>
 </div>
   
   <button onclick="calc()">Calcular presupuesto</button>
@@ -318,6 +352,15 @@ function calc(){
   const envioC = incluirEnvio ? precioCuotas(montoEnvio, PRECIOS.financiero.cuotas3) : 0;
   const envioD = incluirEnvio ? precioCuotas(montoEnvio, PRECIOS.financiero.cuotas12) : 0;
 
+  const tipoDescuento = document.getElementById("tipoDescuento").value;
+  const valorDescuentoInput = parseFloat(document.getElementById("valorDescuento").value) || 0;
+  const aplicaDescuento = document.getElementById("incluirDescuento").checked && valorDescuentoInput > 0;
+
+  function calcDescuento(total){
+    if(!aplicaDescuento) return 0;
+    return tipoDescuento === "porcentaje" ? Math.round(total * (valorDescuentoInput/100)) : Math.min(total, valorDescuentoInput);
+  }
+
   const colorTexto = color ? color : "Color a definir";
 
   const f = n => Math.round(n).toString().replace(/\B(?=(\d{3})+(?!\d))/g,".");
@@ -346,6 +389,17 @@ const cem = soloVenecitas ? 0 : Math.ceil(m2/PRECIOS.rendimientos.cemenpoxM2PorB
   const totC = venC + matC + envioC;
   const totD = venD + matD + envioD;
 
+  const descT = calcDescuento(totT);
+  const descC = calcDescuento(totC);
+  const descD = calcDescuento(totD);
+
+  const totTfinal = totT - descT;
+  const totCfinal = totC - descC;
+  const totDfinal = totD - descD;
+
+  const descHTML = (desc, totalOriginal) => aplicaDescuento ? `<div class="precio-tachado">$${f(totalOriginal)}</div><span class="descuento-badge">🎉 Descuento aplicado: -$${f(desc)}</span>` : "";
+  const descWA = (desc, totalOriginal) => aplicaDescuento ? `~$${f(totalOriginal)}~\n🎉 *DESCUENTO APLICADO: -$${f(desc)}*\n` : "";
+
   const txt = `
 <div class="block" style="text-align:center; margin-bottom:18px;">
 <img src="https://raw.githubusercontent.com/Neobind737/Cotizador-Neobind/main/NEO%20MARCA.png" style="width:110px;" crossorigin="anonymous">
@@ -363,19 +417,22 @@ Venecitas: $${f(venT)}${detalleMateriales}
 
 <div class="block transferencia-destacada">
 <div class="block-title">💰 Transferencia</div>
-<div class="valor-grande">$${f(totT)}</div>
+${descHTML(descT, totT)}
+<div class="valor-grande">$${f(totTfinal)}</div>
 </div>
 
 <div class="block promo-suave">
 <div class="block-title">💳 Promo 3 cuotas</div>
-<div class="valor-mediano">3× $${f(totC/3)}</div>
-<div class="promo-total-chico-suave">Total: $${f(totC)}</div>
+${descHTML(descC, totC)}
+<div class="valor-mediano">3× $${f(totCfinal/3)}</div>
+<div class="promo-total-chico-suave">Total: $${f(totCfinal)}</div>
 </div>
 
 <div class="block promo-destacada">
 <div class="block-title">🔥 Promo 12 cuotas</div>
-<div class="promo-cuota-grande">12× $${f(totD/12)}</div>
-<div class="promo-total-chico">Total: $${f(totD)}</div>
+${descHTML(descD, totD)}
+<div class="promo-cuota-grande">12× $${f(totDfinal/12)}</div>
+<div class="promo-total-chico">Total: $${f(totDfinal)}</div>
 </div>
 
 ${envioDisclaimer}
@@ -393,16 +450,17 @@ ${envioDisclaimer}
 *Detalle (precio transferencia)*
 • Venecitas: $${f(venT)}${detalleMaterialesWA}
 
-💰 *TOTAL TRANSFERENCIA: $${f(totT)}*
+💰 *TOTAL TRANSFERENCIA*
+${descWA(descT, totT)}*$${f(totTfinal)}*
 
 ━━━━━━━━━━━━━━
 
 💳 *Promo 3 cuotas*
-$${f(totC)}  (3× $${f(totC/3)})
+${descWA(descC, totC)}$${f(totCfinal)}  (3× $${f(totCfinal/3)})
 
 🔥 *PROMO 12 CUOTAS* 🔥
-👉 *12× $${f(totD/12)}*
-(Total: $${f(totD)})
+${descWA(descD, totD)}👉 *12× $${f(totDfinal/12)}*
+(Total: $${f(totDfinal)})
 
 ⚡ _Cotización válida por 3 días_${envioDisclaimerWA}`;
 
