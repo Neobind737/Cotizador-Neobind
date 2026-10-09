@@ -13,20 +13,20 @@ cemenpoxM2PorBolsa: 6.5,
 cementoBlancoM2PorBolsa: 25
 },
 consumidorFinal: {
-venecita: 20980,
+venecita: 21980,
 cemenpox: 37000,
-cementoBlanco: 38000
+cementoBlanco: 44500
 },
 comercio1: {
-distri105: { nombre: "DISTRI 10.5", venecita: 16000, cemenpox: 28000, cementoBlanco: 32000 }
+distri105: { nombre: "DISTRI 10.5", venecita: 17000, cemenpox: 28000, cementoBlanco: 32000 }
 },
 comercio2: {
-venecita: 17545,
+venecita: 18755,
 cemenpox: 33880,
 cementoBlanco: 38720
 },
 distribuidorDefault: {
-venecita: 20980,
+venecita: 21980,
 materiales: 8400,
 colocacion: 30000
 }
