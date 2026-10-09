@@ -1,12 +1,12 @@
 // PRECIOS.JS - Fuente unica de precios para todos los cotizadores Neobind
 // Para actualizar un precio: cambia el numero aca y se actualiza en todos.
-// Ultima actualizacion: 24/09/2026
+// Ultima actualizacion: 09/10/2026
 
 const PRECIOS = {
 financiero: {
-comisionUala: 0.049,
-cuotas3: 0.08,
-cuotas12: 0.29
+comisionUala: 0.0184,
+cuotas3: 0.1269,
+cuotas12: 0.3907
 },
 rendimientos: {
 cemenpoxM2PorBolsa: 6.5,
