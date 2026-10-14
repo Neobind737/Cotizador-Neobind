@@ -6,6 +6,10 @@
 
 <title>Cotizador Neobind</title>
 
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Source+Serif+4:ital,opsz,wght@1,8..60,400&display=swap">
+
 <style>
 body {
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto;
@@ -103,126 +107,171 @@ button {
 #wa { background:#25D366; }
 #copyWA { background:#007AFF; }
 
-.budget {
-  margin-top:25px;
-  background:#fafafa;
-  padding:18px;
-  border-radius:14px;
-  font-size:14px;
-  border:1px solid #eee;
-  line-height:1.4;
+/* =========================================================
+   PRESUPUESTO (FICHA 1080 x 1920)
+   La ficha se arma siempre a tamaño real y en pantalla se
+   muestra achicada. La imagen descargada sale de esta misma
+   ficha, así que lo que se ve es lo que se descarga.
+   ========================================================= */
+.preview {
+  margin:25px -28px 6px;
+  overflow:hidden;
+  position:relative;
+  background:#fff;
+  border-top:1px solid #eee;
+  border-bottom:1px solid #eee;
 }
+.preview-escala { width:1080px; transform-origin:0 0; }
 
-.block { margin-bottom:14px; }
-.block-title { font-weight:600; }
-
-/* ⭐ TOTAL MEJORADO */
-.total-destacado {
-  font-weight:800;
-  font-size:20px;
-  color:#0a7cff;
-}
-
-/* 💰 TRANSFERENCIA DESTACADA */
-.transferencia-destacada {
-  background: #323232;
-  color:#fff;
-  padding:14px 16px;
-  border-radius:14px;
-}
-
-.transferencia-destacada .block-title {
-  color:#fff;
-  opacity:0.75;
-  font-size:12px;
-  text-transform:uppercase;
-  letter-spacing:0.5px;
-  margin-bottom:4px;
-}
-
-.valor-grande {
-  font-size:23px;
-  font-weight:800;
-  line-height:1.2;
-}
-
-/* 💳 PROMO 3 CUOTAS - MAS SUAVE */
-.promo-suave {
-  background:#f2f2f3;
-  border:1px solid #e6e6e7;
-  padding:12px 14px;
-  border-radius:12px;
-}
-
-.promo-suave .block-title {
-  font-size:12px;
-  color:#97979b;
-  text-transform:uppercase;
-  letter-spacing:0.5px;
-  margin-bottom:4px;
-  font-weight:600;
-}
-
-.valor-mediano {
-  font-size:16px;
-  font-weight:700;
+.ficha {
+  width:1080px;
+  height:1920px;
+  box-sizing:border-box;
+  background:#ffffff;
+  display:flex;
+  flex-direction:column;
+  font-family:'Manrope', sans-serif;
   color:#323232;
+  line-height:1.3;
+  overflow:hidden;
+  -webkit-font-smoothing:antialiased;
 }
+.ficha * { box-sizing:border-box; }
 
-.promo-total-chico-suave {
-  font-size:12px;
-  color:#97979b;
-  margin-top:2px;
+.f-head {
+  padding:72px 88px 0;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  gap:32px;
 }
+.f-logo { width:260px; height:auto; display:block; }
+.f-meta { display:flex; flex-direction:column; align-items:flex-end; gap:4px; }
+.f-kicker { font-size:22px; font-weight:700; letter-spacing:0.14em; text-transform:uppercase; }
+.f-fecha { font-size:24px; color:#66666b; }
 
-/* 🔥 PROMO 12 CUOTAS DESTACADA */
-.promo-destacada {
-  background: linear-gradient(135deg, #3ebbce, #86ccd1);
-  color:#fff;
-  padding:14px 16px;
-  border-radius:14px;
+/* Fotos: con color elegido (pileta + placa) */
+.f-hero {
+  margin:40px 88px 0;
+  flex-grow:1;
+  min-height:420px;
+  display:grid;
+  gap:16px;
 }
-
-.promo-destacada .block-title {
-  color:#fff;
-  font-size:12px;
-  text-transform:uppercase;
-  letter-spacing:0.5px;
-  margin-bottom:4px;
+.f-hero--color { grid-template-columns:3fr 2fr; grid-template-rows:1fr; }
+.f-foto {
+  position:relative;
+  border-radius:32px;
+  overflow:hidden;
+  background-color:#eef3f4;
 }
-
-.promo-cuota-grande {
-  font-size:23px;
-  font-weight:800;
-  line-height:1.2;
+/* La foto va un poco más grande que su caja: así no aparece una línea fina en el borde de la imagen descargada */
+.f-img {
+  position:absolute;
+  left:-2px; top:-2px; right:-2px; bottom:-2px;
+  background-size:cover;
+  background-position:center;
+  background-repeat:no-repeat;
 }
-
-.promo-total-chico {
-  font-size:13px;
-  opacity:0.9;
-  margin-top:2px;
+.f-pill {
+  position:absolute;
+  left:24px;
+  bottom:24px;
+  display:flex;
+  align-items:center;
+  gap:12px;
+  padding:12px 24px 12px 14px;
+  border-radius:999px;
+  background:#ffffff;
+  font-size:26px;
+  font-weight:700;
+  white-space:nowrap;
 }
+.f-pill--chico { left:20px; padding:10px 20px; font-size:22px; font-weight:600; }
+.f-swatch { width:30px; height:30px; border-radius:8px; flex-shrink:0; }
 
-/* 🎉 DESCUENTO */
-.precio-tachado {
-  text-decoration: line-through;
-  opacity:0.65;
-  font-size:14px;
-  margin-bottom:4px;
-}
-
-.descuento-badge {
-  display:inline-block;
-  background:#16a34a;
-  color:#fff;
-  font-weight:800;
-  font-size:12px;
-  padding:5px 12px;
+/* Fotos: sin color elegido (los 7 colores) */
+.f-hero--grilla { grid-template-columns:repeat(4, 1fr); grid-template-rows:repeat(2, 1fr); gap:12px; }
+.f-definir {
   border-radius:20px;
-  margin-bottom:8px;
-  letter-spacing:0.3px;
+  background:#323232;
+  color:#ffffff;
+  padding:24px 22px;
+  display:flex;
+  flex-direction:column;
+  justify-content:flex-end;
+  gap:4px;
 }
+.f-definir-serif { font-family:'Source Serif 4', Georgia, serif; font-style:italic; font-size:30px; line-height:1.1; color:#86ccd1; }
+.f-definir-titulo { font-size:34px; font-weight:800; letter-spacing:-0.02em; line-height:1.05; }
+.f-definir-texto { margin-top:8px; font-size:19px; color:#d9d9dc; }
+.f-card {
+  border-radius:20px;
+  border:2px solid #e3e7e8;
+  background:#ffffff;
+  display:flex;
+  flex-direction:column;
+  min-height:0;
+  overflow:hidden;
+}
+.f-card-foto {
+  flex-grow:1;
+  min-height:0;
+  position:relative;
+  overflow:hidden;
+  background-color:#eef3f4;
+}
+.f-card-nombre { padding:10px 12px; font-size:20px; font-weight:700; white-space:nowrap; }
 
+/* Título */
+.f-titulo { padding:44px 88px 0; display:flex; flex-direction:column; }
+.f-serif { font-family:'Source Serif 4', Georgia, serif; font-style:italic; font-size:40px; line-height:1.2; color:#0f6e7a; }
+.f-m2 { margin-top:4px; font-size:104px; font-weight:800; letter-spacing:-0.035em; line-height:1; }
+
+/* Total transferencia */
+.f-total {
+  margin:36px 88px 0;
+  background:#323232;
+  border-radius:28px;
+  padding:36px 48px;
+  color:#ffffff;
+  display:flex;
+  flex-direction:column;
+}
+.f-total-label { font-size:22px; font-weight:700; letter-spacing:0.12em; text-transform:uppercase; color:#86ccd1; }
+.f-total-antes { margin-top:14px; display:flex; align-items:center; gap:14px; }
+.f-tachado { font-size:26px; color:#a9a9ad; text-decoration:line-through; }
+.f-off { background:#3ebbce; color:#323232; font-size:20px; font-weight:800; letter-spacing:0.06em; padding:4px 12px; border-radius:8px; }
+.f-total-valor { margin-top:8px; font-size:104px; font-weight:800; letter-spacing:-0.035em; line-height:1.05; }
+.f-total-antes + .f-total-valor { margin-top:2px; }
+.f-total-nota { margin-top:6px; font-size:26px; color:#d9d9dc; }
+
+/* Cuotas */
+.f-cuotas { padding:24px 88px 0; display:grid; grid-template-columns:1fr 1fr; gap:24px; }
+.f-cuota { border:2px solid #e3e7e8; border-radius:24px; padding:28px 34px; display:flex; flex-direction:column; gap:4px; }
+.f-cuota-label { font-size:21px; font-weight:700; letter-spacing:0.1em; text-transform:uppercase; color:#0f6e7a; }
+.f-cuota-valor { font-size:50px; font-weight:800; letter-spacing:-0.02em; line-height:1.15; }
+.f-cuota-total { font-size:23px; color:#66666b; }
+
+/* Qué incluye */
+.f-incluye { padding:44px 88px 0; display:flex; flex-direction:column; }
+.f-incluye-label { font-size:22px; font-weight:700; letter-spacing:0.12em; text-transform:uppercase; color:#66666b; margin-bottom:8px; }
+.f-fila { display:grid; grid-template-columns:200px 1fr; gap:16px; align-items:baseline; padding:14px 0; border-bottom:1px solid #e3e7e8; font-size:26px; }
+.f-fila:last-child { border-bottom:none; }
+.f-fila-cant { font-weight:800; }
+.f-fila-cant--marca { color:#0f6e7a; }
+.f-fila-desc { font-weight:500; }
+.f-gris { color:#66666b; }
+
+/* Pie */
+.f-pie { padding:36px 88px 28px; display:flex; justify-content:space-between; align-items:flex-end; gap:32px; font-size:23px; color:#66666b; }
+.f-pie-col { display:flex; flex-direction:column; gap:4px; }
+.f-pie-col--der { text-align:right; }
+.f-fuerte { font-weight:700; color:#323232; }
+
+/* Franja de venecitas */
+.f-mosaico { display:grid; grid-template-columns:repeat(27, 1fr); gap:6px; padding:0 6px 6px; }
+.f-tesela { aspect-ratio:1 / 1; border-radius:4px; }
 </style>
 </head>
 
@@ -241,42 +290,42 @@ button {
 
 <div class="colors">
 
-<div class="color-card" onclick="sel(this,'Blanco Nácar','3619704621491762')">
+<div class="color-card" onclick="sel(this,'blanco')">
 <img src="https://raw.githubusercontent.com/Neobind737/Cotizador-Neobind/main/img/blanco.jpg">
 <div class="color-name">Blanco Nácar</div>
 </div>
 
-<div class="color-card" onclick="sel(this,'Agua Marina','3597377153718869')">
+<div class="color-card" onclick="sel(this,'aguamarina')">
 <img src="https://raw.githubusercontent.com/Neobind737/Cotizador-Neobind/main/img/aguamarina.jpg">
 <div class="color-name">Agua Marina</div>
 </div>
 
-<div class="color-card" onclick="sel(this,'Turquesa','3856030544515788')">
+<div class="color-card" onclick="sel(this,'turquesa')">
 <img src="https://raw.githubusercontent.com/Neobind737/Cotizador-Neobind/main/img/turquesa.jpg">
 <div class="color-name">Turquesa</div>
 </div>
 
-<div class="color-card" onclick="sel(this,'Azul','3620251704771327')">
+<div class="color-card" onclick="sel(this,'azul')">
 <img src="https://raw.githubusercontent.com/Neobind737/Cotizador-Neobind/main/img/azul.jpg">
 <div class="color-name">Azul</div>
 </div>
 
-<div class="color-card" onclick="sel(this,'Verde Esmeralda','4295199693857459')">
+<div class="color-card" onclick="sel(this,'verde')">
 <img src="https://raw.githubusercontent.com/Neobind737/Cotizador-Neobind/main/img/verde.jpg">
 <div class="color-name">Verde Esmeralda</div>
 </div>
 
-<div class="color-card" onclick="sel(this,'Negro','3511570448947533')">
+<div class="color-card" onclick="sel(this,'negro')">
 <img src="https://raw.githubusercontent.com/Neobind737/Cotizador-Neobind/main/img/negro.jpg">
 <div class="color-name">Negro</div>
 </div>
 
-<div class="color-card" onclick="sel(this,'Gris','3580942102015676')">
+<div class="color-card" onclick="sel(this,'gris')">
 <img src="https://raw.githubusercontent.com/Neobind737/Cotizador-Neobind/main/img/gris.jpg">
 <div class="color-name">Gris</div>
 </div>
 
-<div class="color-card" onclick="sel(this,'No definí aún','')">
+<div class="color-card" onclick="sel(this,'')">
 <img src="https://raw.githubusercontent.com/Neobind737/Cotizador-Neobind/main/img/catalogo.jpg">
 <div class="color-name">No definí aún</div>
 </div>
@@ -309,10 +358,10 @@ button {
     </div>
   </div>
 </div>
-  
+
   <button onclick="calc()">Calcular presupuesto</button>
 
-<div id="budget" class="budget" style="display:none;"></div>
+<div id="budget" class="preview" style="display:none;"></div>
 
 <button id="copyWA" style="display:none;">📋 Copiar para WhatsApp</button>
 <button id="downloadImg" style="display:none;">📸 Descargar presupuesto (imagen)</button>
@@ -324,19 +373,54 @@ button {
   <script src="precios.js"></script>
 
 <script>
-let color = "";
-let productId = "";
+// Dónde están las fotos y el logo (mismo repo).
+const BASE = "https://raw.githubusercontent.com/Neobind737/Cotizador-Neobind/main/";
+const WHATSAPP = "5493425945666";
+const WHATSAPP_VISIBLE = "342 594-5666";
+
+// 🎨 Colores: nombre, producto de WhatsApp, foto de pileta, foto de placa,
+// muestra de color y tonos para la franja de venecitas del pie.
+const COLORES = {
+  blanco:     { nombre:"Blanco Nácar",    productId:"3619704621491762", muestra:"#e6e2d8", borde:"#cfcbc1", tonos:["#bdb9ae","#cfcbc1","#dedad1","#ebe8e1"] },
+  aguamarina: { nombre:"Agua Marina",     productId:"3597377153718869", muestra:"#9fc9cc", tonos:["#7da9ae","#a3c9cc","#c3dfe1","#e0eff0"] },
+  turquesa:   { nombre:"Turquesa",        productId:"3856030544515788", muestra:"#2f93b8", tonos:["#2f93b8","#3ebbce","#7fd0de","#c4ebf1"] },
+  azul:       { nombre:"Azul",            productId:"3620251704771327", muestra:"#2f6fd0", tonos:["#2a5fc0","#3d7fd8","#86b0ea","#c9dcf6"] },
+  verde:      { nombre:"Verde Esmeralda", productId:"4295199693857459", muestra:"#3f7d6a", tonos:["#3f7d6a","#5f9a88","#93bfb1","#cfe3dc"] },
+  negro:      { nombre:"Negro",           productId:"3511570448947533", muestra:"#2b2b2e", tonos:["#2b2b2e","#4a4a4f","#7a7a80","#b5b5ba"] },
+  gris:       { nombre:"Gris",            productId:"3580942102015676", muestra:"#9a9aa0", tonos:["#8a8a90","#a2a1a6","#c1c0c4","#dedde0"] }
+};
+const ORDEN_COLORES = ["blanco","aguamarina","turquesa","azul","verde","negro","gris"];
+const TONOS_TODOS = ["#1f9aa6","#1f6fe0","#3f7d6a","#7ccfd0","#e2ded2","#9a9aa0","#2b2b2e"];
+
+const DIAS = ["domingo","lunes","martes","miércoles","jueves","viernes","sábado"];
+const MESES = ["enero","febrero","marzo","abril","mayo","junio","julio","agosto","septiembre","octubre","noviembre","diciembre"];
+
+let colorKey = "";
 let whatsappText = "";
+let nombreArchivo = "";
 
 if(new URLSearchParams(window.location.search).get("admin") === "1"){
   document.getElementById("panelAdmin").style.display = "block";
 }
 
-function sel(el, c, id){
-  color = c;
-  productId = id;
+function sel(el, key){
+  colorKey = key;
   document.querySelectorAll('.color-card').forEach(e=>e.classList.remove('selected'));
   el.classList.add('selected');
+}
+
+const f = n => Math.round(n).toString().replace(/\B(?=(\d{3})+(?!\d))/g,".");
+const num = n => String(n).replace(".", ",");
+const bolsas = n => `${n} ${n === 1 ? "bolsa" : "bolsas"}`;
+
+// Franja de venecitas: siempre el mismo dibujo para el mismo color.
+function teselas(tonos, semilla){
+  let s = semilla, html = "";
+  for(let i=0; i<27; i++){
+    s = (s * 9301 + 49297) % 233280;
+    html += `<div class="f-tesela" style="background:${tonos[Math.floor((s/233280)*tonos.length)]}"></div>`;
+  }
+  return html;
 }
 
 function calc(){
@@ -344,7 +428,7 @@ function calc(){
 
   if(!m2 || m2<=0) return alert("Ingresá m² válidos");
 
-    const soloVenecitas = document.getElementById("soloVenecitas").checked;
+  const soloVenecitas = document.getElementById("soloVenecitas").checked;
 
   const montoEnvio = parseFloat(document.getElementById("montoEnvio").value) || 0;
   const incluirEnvio = document.getElementById("incluirEnvio").checked && montoEnvio > 0;
@@ -361,31 +445,23 @@ function calc(){
     return tipoDescuento === "porcentaje" ? Math.round(total * (valorDescuentoInput/100)) : Math.min(total, valorDescuentoInput);
   }
 
-  const colorTexto = color ? color : "Color a definir";
-
-  const f = n => Math.round(n).toString().replace(/\B(?=(\d{3})+(?!\d))/g,".");
+  const color = colorKey ? COLORES[colorKey] : null;
 
   // 💎 Venecitas (precio por m²)
   const venT = m2*PRECIOS.consumidorFinal.venecita;   // Transferencia
-    const venC = m2*precioCuotas(PRECIOS.consumidorFinal.venecita, PRECIOS.financiero.cuotas3);   // 3 cuotas sin interés
-    const venD = m2*precioCuotas(PRECIOS.consumidorFinal.venecita, PRECIOS.financiero.cuotas12);   // 12 cuotas sin interés
+  const venC = m2*precioCuotas(PRECIOS.consumidorFinal.venecita, PRECIOS.financiero.cuotas3);   // 3 cuotas
+  const venD = m2*precioCuotas(PRECIOS.consumidorFinal.venecita, PRECIOS.financiero.cuotas12);  // 12 cuotas
 
-    // 🛠 Materiales
-const cem = soloVenecitas ? 0 : Math.ceil(m2/PRECIOS.rendimientos.cemenpoxM2PorBolsa);
-    const jun = soloVenecitas ? 0 : Math.ceil(m2/PRECIOS.rendimientos.cementoBlancoM2PorBolsa);
+  // 🛠 Materiales
+  const cem = soloVenecitas ? 0 : Math.ceil(m2/PRECIOS.rendimientos.cemenpoxM2PorBolsa);
+  const jun = soloVenecitas ? 0 : Math.ceil(m2/PRECIOS.rendimientos.cementoBlancoM2PorBolsa);
 
-    const matT = soloVenecitas ? 0 : (cem*PRECIOS.consumidorFinal.cemenpox + jun*PRECIOS.consumidorFinal.cementoBlanco);   // Transferencia
-    const matC = soloVenecitas ? 0 : (cem*precioCuotas(PRECIOS.consumidorFinal.cemenpox, PRECIOS.financiero.cuotas3) + jun*precioCuotas(PRECIOS.consumidorFinal.cementoBlanco, PRECIOS.financiero.cuotas3));   // 3 cuotas sin interés
-    const matD = soloVenecitas ? 0 : (cem*precioCuotas(PRECIOS.consumidorFinal.cemenpox, PRECIOS.financiero.cuotas12) + jun*precioCuotas(PRECIOS.consumidorFinal.cementoBlanco, PRECIOS.financiero.cuotas12));   // 12 cuotas sin interés
+  const matT = soloVenecitas ? 0 : (cem*PRECIOS.consumidorFinal.cemenpox + jun*PRECIOS.consumidorFinal.cementoBlanco);
+  const matC = soloVenecitas ? 0 : (cem*precioCuotas(PRECIOS.consumidorFinal.cemenpox, PRECIOS.financiero.cuotas3) + jun*precioCuotas(PRECIOS.consumidorFinal.cementoBlanco, PRECIOS.financiero.cuotas3));
+  const matD = soloVenecitas ? 0 : (cem*precioCuotas(PRECIOS.consumidorFinal.cemenpox, PRECIOS.financiero.cuotas12) + jun*precioCuotas(PRECIOS.consumidorFinal.cementoBlanco, PRECIOS.financiero.cuotas12));
 
   // 💰 Totales
   const totT = venT + matT + envioT;
-
-    const detalleMateriales = soloVenecitas ? "" : `<br>Materiales (${cem} Cemenpox + ${jun} Cemento Blanco): $${f(matT)}`;
-    const detalleMaterialesWA = soloVenecitas ? "" : `\n• Materiales (${cem} Cemenpox + ${jun} Cemento Blanco): $${f(matT)}`;
-
-  const envioDisclaimer = incluirEnvio ? `<div class="block">📦 Esta cotización incluye el envío del pallet completo (Venecitas + materiales de instalación) a su domicilio.</div>` : "";
-  const envioDisclaimerWA = incluirEnvio ? `\n\n📦 _Esta cotización incluye el envío del pallet completo (Venecitas + materiales de instalación) a su domicilio._` : "";
   const totC = venC + matC + envioC;
   const totD = venD + matD + envioD;
 
@@ -394,79 +470,158 @@ const cem = soloVenecitas ? 0 : Math.ceil(m2/PRECIOS.rendimientos.cemenpoxM2PorB
   const descD = calcDescuento(totD);
 
   const totTfinal = totT - descT;
-  const totCfinal = totC - descC;
-  const totDfinal = totD - descD;
+  // La cuota se redondea y el total sale de cuota × cantidad, así siempre cierra.
+  const cuota3 = Math.round((totC - descC)/3);
+  const cuota12 = Math.round((totD - descD)/12);
+  const totCfinal = cuota3*3;
+  const totDfinal = cuota12*12;
 
-  const descHTML = (desc, totalOriginal) => aplicaDescuento ? `<div class="precio-tachado">$${f(totalOriginal)}</div><span class="descuento-badge">🎉 Descuento aplicado: -$${f(desc)}</span>` : "";
-  const descWA = (desc, totalOriginal) => aplicaDescuento ? `~$${f(totalOriginal)}~\n🎉 *DESCUENTO APLICADO: -$${f(desc)}*\n` : "";
+  // 📅 Fechas
+  const hoy = new Date();
+  const vence = new Date(hoy.getFullYear(), hoy.getMonth(), hoy.getDate() + 3);
+  const fechaHoy = `${hoy.getDate()} de ${MESES[hoy.getMonth()]} de ${hoy.getFullYear()}`;
+  const fechaVence = `${DIAS[vence.getDay()]} ${vence.getDate()} de ${MESES[vence.getMonth()]}`;
 
-  const txt = `
-<div class="block" style="text-align:center; margin-bottom:18px;">
-<img src="https://raw.githubusercontent.com/Neobind737/Cotizador-Neobind/main/NEO%20MARCA.png" style="width:110px;" crossorigin="anonymous">
-</div>
+  // Textos que cambian según descuento / envío
+  const etiquetaOff = tipoDescuento === "porcentaje" ? `${num(valorDescuentoInput)}% OFF` : "DESCUENTO";
+  let notaTotal;
+  if(aplicaDescuento) notaTotal = `Ahorrás $${f(descT)}${incluirEnvio ? " · envío incluido" : ""}`;
+  else notaTotal = incluirEnvio ? "Envío a domicilio incluido" : "El mejor precio, en un solo pago";
+  const piePie = aplicaDescuento
+    ? (tipoDescuento === "porcentaje" ? `Todas las opciones incluyen el ${num(valorDescuentoInput)}% de descuento` : "Todas las opciones incluyen el descuento")
+    : "Cotizado en neobind.com/cotizador";
 
-<div class="block">
-🏊 <b>Presupuesto Neobind</b><br>
-${m2} m² — ${colorTexto}
-</div>
+  // 🖼 Fotos
+  let fotosHTML;
+  if(color){
+    const swatchBorde = color.borde ? `border:2px solid ${color.borde};` : "";
+    fotosHTML = `
+      <div class="f-hero f-hero--color">
+        <div class="f-foto">
+          <div class="f-img" style="background-image:url('${BASE}img/piletas/${colorKey}.jpg')"></div>
+          <div class="f-pill"><span class="f-swatch" style="background:${color.muestra};${swatchBorde}"></span>${color.nombre}</div>
+        </div>
+        <div class="f-foto">
+          <div class="f-img" style="background-image:url('${BASE}img/${colorKey}.jpg')"></div>
+          <div class="f-pill f-pill--chico">La placa</div>
+        </div>
+      </div>`;
+  } else {
+    fotosHTML = `
+      <div class="f-hero f-hero--grilla">
+        <div class="f-definir">
+          <div class="f-definir-serif">Color</div>
+          <div class="f-definir-titulo">a definir</div>
+          <div class="f-definir-texto">Elegí entre estos 7 colores</div>
+        </div>
+        ${ORDEN_COLORES.map(k => `
+        <div class="f-card">
+          <div class="f-card-foto"><div class="f-img" style="background-image:url('${BASE}img/piletas/mini/${k}.jpg')"></div></div>
+          <div class="f-card-nombre">${COLORES[k].nombre}</div>
+        </div>`).join("")}
+      </div>`;
+  }
 
-<div class="block">
-<div class="block-title">Detalle (precio transferencia)</div>
-Venecitas: $${f(venT)}${detalleMateriales}
-</div>
+  // 📦 Qué incluye
+  const filas = [[`${m2} m²`, "Venecitas Neobind", false]];
+  if(!soloVenecitas){
+    filas.push([bolsas(cem), `Adhesivo Cemenpox <span class="f-gris">· 25 kg</span>`, false]);
+    filas.push([bolsas(jun), `Cemento blanco para juntas <span class="f-gris">· 25 kg</span>`, false]);
+  }
+  if(incluirEnvio) filas.push(["Incluido", "Envío del pallet a tu domicilio", true]);
 
-<div class="block transferencia-destacada">
-<div class="block-title">💰 Transferencia</div>
-${descHTML(descT, totT)}
-<div class="valor-grande">$${f(totTfinal)}</div>
-</div>
+  const tonos = color ? color.tonos : TONOS_TODOS;
+  const semilla = colorKey ? (ORDEN_COLORES.indexOf(colorKey)+1)*7 : 13;
 
-<div class="block promo-suave">
-<div class="block-title">💳 Promo 3 cuotas</div>
-${descHTML(descC, totC)}
-<div class="valor-mediano">3× $${f(totCfinal/3)}</div>
-<div class="promo-total-chico-suave">Total: $${f(totCfinal)}</div>
-</div>
+  const ficha = `
+  <div class="ficha" id="ficha">
+    <div class="f-head">
+      <img class="f-logo" src="${BASE}img/marca/neobind-color.png" crossorigin="anonymous" alt="Neobind">
+      <div class="f-meta">
+        <div class="f-kicker">Presupuesto</div>
+        <div class="f-fecha">${fechaHoy}</div>
+      </div>
+    </div>
 
-<div class="block promo-destacada">
-<div class="block-title">🔥 Promo 12 cuotas</div>
-${descHTML(descD, totD)}
-<div class="promo-cuota-grande">12× $${f(totDfinal/12)}</div>
-<div class="promo-total-chico">Total: $${f(totDfinal)}</div>
-</div>
+    ${fotosHTML}
 
-${envioDisclaimer}
+    <div class="f-titulo">
+      <div class="f-serif">Tu pileta</div>
+      <div class="f-m2">${m2} m²</div>
+    </div>
 
-<div class="block">
-⚡ Cotización válida por 3 días
-</div>
-`;
+    <div class="f-total">
+      <div class="f-total-label">Total por transferencia</div>
+      ${aplicaDescuento ? `<div class="f-total-antes"><span class="f-tachado">$${f(totT)}</span><span class="f-off">${etiquetaOff}</span></div>` : ""}
+      <div class="f-total-valor">$${f(totTfinal)}</div>
+      <div class="f-total-nota">${notaTotal}</div>
+    </div>
+
+    <div class="f-cuotas">
+      <div class="f-cuota">
+        <div class="f-cuota-label">3 cuotas de</div>
+        <div class="f-cuota-valor">$${f(cuota3)}</div>
+        <div class="f-cuota-total">Total $${f(totCfinal)}</div>
+      </div>
+      <div class="f-cuota">
+        <div class="f-cuota-label">12 cuotas de</div>
+        <div class="f-cuota-valor">$${f(cuota12)}</div>
+        <div class="f-cuota-total">Total $${f(totDfinal)}</div>
+      </div>
+    </div>
+
+    <div class="f-incluye">
+      <div class="f-incluye-label">Qué incluye</div>
+      ${filas.map(([cant, desc, marca]) => `
+      <div class="f-fila">
+        <div class="f-fila-cant${marca ? " f-fila-cant--marca" : ""}">${cant}</div>
+        <div class="f-fila-desc">${desc}</div>
+      </div>`).join("")}
+    </div>
+
+    <div class="f-pie">
+      <div class="f-pie-col">
+        <div class="f-fuerte">Válido hasta el ${fechaVence}</div>
+        <div>${piePie}</div>
+      </div>
+      <div class="f-pie-col f-pie-col--der">
+        <div>WhatsApp</div>
+        <div class="f-fuerte">${WHATSAPP_VISIBLE}</div>
+      </div>
+    </div>
+
+    <div class="f-mosaico">${teselas(tonos, semilla)}</div>
+  </div>`;
+
+  // 💬 Texto para WhatsApp
+  const lineasIncluye = [`• ${m2} m² de venecitas Neobind`];
+  if(!soloVenecitas){
+    lineasIncluye.push(`• ${bolsas(cem)} de adhesivo Cemenpox (25 kg)`);
+    lineasIncluye.push(`• ${bolsas(jun)} de cemento blanco para juntas (25 kg)`);
+  }
+  if(incluirEnvio) lineasIncluye.push("• Envío del pallet a tu domicilio");
 
   whatsappText =
-`🏊 *PRESUPUESTO NEOBIND*
+`*Presupuesto Neobind*
+Tu pileta: *${m2} m²* · ${color ? color.nombre : "color a definir"}
 
-*${m2} m²* — ${colorTexto}
+*Total por transferencia: $${f(totTfinal)}*
+${aplicaDescuento ? `~$${f(totT)}~ ${etiquetaOff} · ahorrás $${f(descT)}\n` : ""}
+3 cuotas de $${f(cuota3)} (total $${f(totCfinal)})
+12 cuotas de $${f(cuota12)} (total $${f(totDfinal)})
 
-*Detalle (precio transferencia)*
-• Venecitas: $${f(venT)}${detalleMaterialesWA}
+*Qué incluye*
+${lineasIncluye.join("\n")}
 
-💰 *TOTAL TRANSFERENCIA*
-${descWA(descT, totT)}*$${f(totTfinal)}*
+_Válido hasta el ${fechaVence}._${aplicaDescuento ? `\n_${piePie}._` : ""}
+neobind.com/cotizador`;
 
-━━━━━━━━━━━━━━
-
-💳 *Promo 3 cuotas*
-${descWA(descC, totC)}$${f(totCfinal)}  (3× $${f(totCfinal/3)})
-
-🔥 *PROMO 12 CUOTAS* 🔥
-${descWA(descD, totD)}👉 *12× $${f(totDfinal/12)}*
-(Total: $${f(totDfinal)})
-
-⚡ _Cotización válida por 3 días_${envioDisclaimerWA}`;
+  nombreArchivo = `presupuesto-neobind-${m2}m2${colorKey ? "-" + colorKey : ""}.png`;
 
   const out = document.getElementById("budget");
-  out.style.display="block";
-  out.innerHTML = txt;
+  out.style.display = "block";
+  out.innerHTML = `<div class="preview-escala">${ficha}</div>`;
+  ajustarPreview();
 
   document.getElementById("copyWA").style.display="block";
   document.getElementById("downloadImg").style.display="block";
@@ -477,37 +632,72 @@ ${descWA(descD, totD)}👉 *12× $${f(totDfinal/12)}*
     alert("Copiado para WhatsApp ✅");
   };
 
-  document.getElementById("downloadImg").onclick = ()=>{
-    const btn = document.getElementById("downloadImg");
-    btn.disabled = true;
-    btn.textContent = "Generando imagen...";
-
-    html2canvas(document.getElementById("budget"), {
-      backgroundColor: "#ffffff",
-      scale: 2,
-      useCORS: true
-    }).then(canvas => {
-      const link = document.createElement("a");
-      link.download = `presupuesto-neobind-${m2}m2.png`;
-      link.href = canvas.toDataURL("image/png");
-      link.click();
-
-      btn.disabled = false;
-      btn.textContent = "📸 Descargar presupuesto (imagen)";
-    }).catch(err => {
-      alert("No se pudo generar la imagen. Probá de nuevo.");
-      btn.disabled = false;
-      btn.textContent = "📸 Descargar presupuesto (imagen)";
-    });
-  };
+  document.getElementById("downloadImg").onclick = descargarImagen;
 
   document.getElementById("wa").onclick = ()=>{
-    const msg = `Hola! Quiero avanzar con ${m2} m²${color ? ` en color ${color}` : ""}`;
-    const url = productId
-      ? `https://wa.me/p/${productId}/5493425945666?text=${encodeURIComponent(msg)}`
-      : `https://wa.me/5493425945666?text=${encodeURIComponent(msg)}`;
+    const msg = `Hola! Quiero avanzar con ${m2} m²${color ? ` en color ${color.nombre}` : ""}`;
+    const url = color
+      ? `https://wa.me/p/${color.productId}/${WHATSAPP}?text=${encodeURIComponent(msg)}`
+      : `https://wa.me/${WHATSAPP}?text=${encodeURIComponent(msg)}`;
     window.open(url,"_blank");
   };
+}
+
+// La vista previa es la misma ficha achicada al ancho de la pantalla.
+function ajustarPreview(){
+  const out = document.getElementById("budget");
+  const escala = out.querySelector(".preview-escala");
+  if(!escala || out.style.display === "none") return;
+  const s = out.clientWidth / 1080;
+  escala.style.transform = `scale(${s})`;
+  out.style.height = `${Math.round(1920 * s)}px`;
+}
+window.addEventListener("resize", ajustarPreview);
+
+async function descargarImagen(){
+  const btn = document.getElementById("downloadImg");
+  const textoBoton = "📸 Descargar presupuesto (imagen)";
+  btn.disabled = true;
+  btn.textContent = "Generando imagen...";
+
+  try {
+    // Esperamos a que estén las tipografías para que la imagen salga igual que la vista previa.
+    if(document.fonts){
+      await Promise.all([
+        document.fonts.load("800 104px Manrope"),
+        document.fonts.load("500 26px Manrope"),
+        document.fonts.load("italic 400 40px 'Source Serif 4'")
+      ]).catch(()=>{});
+      await document.fonts.ready;
+    }
+
+    const canvas = await html2canvas(document.getElementById("ficha"), {
+      backgroundColor: "#ffffff",
+      scale: 1,
+      width: 1080,
+      height: 1920,
+      useCORS: true,
+      onclone: (doc) => {
+        // En la copia que se fotografía, la ficha va a tamaño real (sin achicar).
+        const ficha = doc.getElementById("ficha");
+        doc.body.appendChild(ficha);
+        ficha.style.position = "absolute";
+        ficha.style.left = "0";
+        ficha.style.top = "0";
+        doc.querySelectorAll(".container").forEach(c => c.style.display = "none");
+      }
+    });
+
+    const link = document.createElement("a");
+    link.download = nombreArchivo || "presupuesto-neobind.png";
+    link.href = canvas.toDataURL("image/png");
+    link.click();
+  } catch(err) {
+    alert("No se pudo generar la imagen. Probá de nuevo.");
+  }
+
+  btn.disabled = false;
+  btn.textContent = textoBoton;
 }
 </script>
 
