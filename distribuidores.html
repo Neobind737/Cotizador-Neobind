@@ -473,7 +473,7 @@ table.doc-table tr:nth-child(even) td{ background:#f2fbfc; }
   </div>
 </div>
 
-<div class="section-title">Precio de venta por m²</div>
+<div class="section-title" id="tituloPrecios">Precio de venta por m²</div>
 <div class="cost-row">
   <label>Venecitas</label>
   <input id="costoVenecita" type="number" value="20980">
@@ -550,7 +550,8 @@ const DISTRIBUIDORES = {
     lisandro: { nombre:"Lisandro Pent",         zona:"San Justo y zona",              telefono:"+54 9 3425 93-9018" },
     matias: { nombre:"Mottin Piscinas / Matías Mottin", zona:"La Plata y zona",         telefono:"+54 9 2213 14-5640" },
     hugo: { nombre:"Hugo Alberto Cavagna", zona:"Junín y zona",         telefono:"+54 9 2364 57-4246" },
-    alvaro: { nombre:"Alvaro Marzano", zona:"Junín y zona",         telefono:"+54 9 2352 48-6405" }
+    alvaro: { nombre:"Alvaro Marzano", zona:"Junín y zona",         telefono:"+54 9 2352 48-6405" },
+    energetika: { nombre:"Energetika S.A.", zona:"Paraguay",         telefono:"+595 982 122858", moneda:"PYG" }
 };
 
 let color = "";
@@ -571,6 +572,17 @@ function onDistribuidorChange(){
     fijo.textContent = `Vas a generar este presupuesto como ${distribuidorActivo.nombre} — ${distribuidorActivo.zona}`;
     fijo.style.display = "block";
     document.getElementById("distribuidorManual").style.display = "none";
+
+    // Distribuidores que cotizan en guaraníes (Paraguay): precios por defecto convertidos desde precios.js
+    if(distribuidorActivo.moneda === "PYG"){
+      document.getElementById("costoVenecita").value = precioGs(PRECIOS.distribuidorDefault.venecita);
+      document.getElementById("costoMateriales").value = precioGs(PRECIOS.distribuidorDefault.materiales);
+      document.getElementById("costoColocacion").value = precioGs(PRECIOS.distribuidorDefault.colocacion);
+      document.getElementById("tituloPrecios").textContent = "Precio de venta por m² (en guaraníes, Gs.)";
+      ["addRetiroMonto","addTrasladoMonto","addViaticosMonto","addOtroMonto"].forEach(id => {
+        document.getElementById(id).placeholder = "Gs.";
+      });
+    }
 
     // Si este distribuidor tiene precios propios definidos, los precargamos
     if(distribuidorActivo.precios){
@@ -610,6 +622,7 @@ function generar(){
   const costoMO  = parseFloat(document.getElementById("costoColocacion").value) || 0;
 
   const f = n => Math.round(n).toString().replace(/\B(?=(\d{3})+(?!\d))/g,".");
+  const sim = (distribuidorActivo && distribuidorActivo.moneda === "PYG") ? "Gs. " : "$";
 
   // Adicionales del checklist: solo entran si están tildados y tienen monto
   const adicionales = [];
@@ -670,14 +683,14 @@ function generar(){
   // Pablo Gomez pidió que Venecitas y Materiales salgan combinados en una sola fila
     let filasProductos;
     if(distribuidorActivo && distribuidorActivo.combinarMateriales){
-          filasProductos = `<tr><td>Materiales (Venecitas Neobind + adhesivo y pastina)</td><td>${m2}</td><td>$${f(costoVen+costoMat)}</td><td>$${f(venTotal+matTotal)}</td></tr>`;
+          filasProductos = `<tr><td>Materiales (Venecitas Neobind + adhesivo y pastina)</td><td>${m2}</td><td>${sim}${f(costoVen+costoMat)}</td><td>${sim}${f(venTotal+matTotal)}</td></tr>`;
     } else {
-          filasProductos = `<tr><td>Venecitas Neobind</td><td>${m2}</td><td>$${f(costoVen)}</td><td>$${f(venTotal)}</td></tr>
-                  <tr><td>Materiales de colocación</td><td>${m2}</td><td>$${f(costoMat)}</td><td>$${f(matTotal)}</td></tr>`;
+          filasProductos = `<tr><td>Venecitas Neobind</td><td>${m2}</td><td>${sim}${f(costoVen)}</td><td>${sim}${f(venTotal)}</td></tr>
+                  <tr><td>Materiales de colocación</td><td>${m2}</td><td>${sim}${f(costoMat)}</td><td>${sim}${f(matTotal)}</td></tr>`;
     }
   
     let filasAdicionales = adicionales.map(a =>
-    `<tr><td>${a.label}</td><td>—</td><td>—</td><td>$${f(a.monto)}</td></tr>`
+    `<tr><td>${a.label}</td><td>—</td><td>—</td><td>${sim}${f(a.monto)}</td></tr>`
   ).join("");
 
   let colorBlock = "";
@@ -736,26 +749,26 @@ function generar(){
 
     <div class="doc-section-label">Productos Neobind</div>
     <table class="doc-table">
-      <thead><tr><th>Concepto</th><th>m²</th><th>$/m²</th><th>Total</th></tr></thead>
+      <thead><tr><th>Concepto</th><th>m²</th><th>${sim.trim()}/m²</th><th>Total</th></tr></thead>
       <tbody>
         ${filasProductos}
       </tbody>
     </table>
-    <div class="doc-subtotal">Subtotal materiales: $${f(subtotalProductos)}</div>
+    <div class="doc-subtotal">Subtotal materiales: ${sim}${f(subtotalProductos)}</div>
 
     <div class="doc-section-label">Servicio de colocación</div>
     <table class="doc-table">
-      <thead><tr><th>Concepto</th><th>m²</th><th>$/m²</th><th>Total</th></tr></thead>
+      <thead><tr><th>Concepto</th><th>m²</th><th>${sim.trim()}/m²</th><th>Total</th></tr></thead>
       <tbody>
-        <tr><td>Colocación - Empastinado - Remoción de pintura</td><td>${m2}</td><td>$${f(costoMO)}</td><td>$${f(moTotal)}</td></tr>
+        <tr><td>Colocación - Empastinado - Remoción de pintura</td><td>${m2}</td><td>${sim}${f(costoMO)}</td><td>${sim}${f(moTotal)}</td></tr>
         ${filasAdicionales}
       </tbody>
     </table>
-    <div class="doc-subtotal">Subtotal colocación: $${f(subtotalColocacion)}</div>
+    <div class="doc-subtotal">Subtotal colocación: ${sim}${f(subtotalColocacion)}</div>
 
     <div class="doc-total-bar">
       <span class="lbl">Total del proyecto</span>
-      <span class="val">$${f(total)}</span>
+      <span class="val">${sim}${f(total)}</span>
     </div>
 
     <div class="doc-terms">
