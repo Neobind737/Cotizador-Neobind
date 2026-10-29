@@ -152,9 +152,9 @@ button {
 
 /* Fotos: con color elegido (pileta + placa) */
 .f-hero {
-  margin:40px 88px 0;
+  margin:32px 88px 0;
   flex-grow:1;
-  min-height:420px;
+  min-height:360px;
   display:grid;
   gap:16px;
 }
@@ -224,16 +224,16 @@ button {
 .f-card-nombre { padding:10px 12px; font-size:20px; font-weight:700; white-space:nowrap; }
 
 /* Título */
-.f-titulo { padding:44px 88px 0; display:flex; flex-direction:column; }
+.f-titulo { padding:36px 88px 0; display:flex; flex-direction:column; }
 .f-serif { font-family:'Source Serif 4', Georgia, serif; font-style:italic; font-size:40px; line-height:1.2; color:#0f6e7a; }
-.f-m2 { margin-top:4px; font-size:104px; font-weight:800; letter-spacing:-0.035em; line-height:1; }
+.f-m2 { margin-top:4px; font-size:96px; font-weight:800; letter-spacing:-0.035em; line-height:1; }
 
 /* Total transferencia */
 .f-total {
-  margin:36px 88px 0;
+  margin:28px 88px 0;
   background:#323232;
   border-radius:28px;
-  padding:36px 48px;
+  padding:30px 48px;
   color:#ffffff;
   display:flex;
   flex-direction:column;
@@ -247,16 +247,36 @@ button {
 .f-total-nota { margin-top:6px; font-size:26px; color:#d9d9dc; }
 
 /* Cuotas */
-.f-cuotas { padding:24px 88px 0; display:grid; grid-template-columns:1fr 1fr; gap:24px; }
-.f-cuota { border:2px solid #e3e7e8; border-radius:24px; padding:28px 34px; display:flex; flex-direction:column; gap:4px; }
-.f-cuota-label { font-size:21px; font-weight:700; letter-spacing:0.1em; text-transform:uppercase; color:#0f6e7a; }
-.f-cuota-valor { font-size:50px; font-weight:800; letter-spacing:-0.02em; line-height:1.15; }
-.f-cuota-total { font-size:23px; color:#66666b; }
+.f-cuotas-bloque { padding:28px 88px 0; display:flex; flex-direction:column; }
+.f-cuotas-head { display:flex; justify-content:space-between; align-items:baseline; gap:16px; margin-bottom:12px; }
+.f-cuotas-titulo { font-size:22px; font-weight:700; letter-spacing:0.12em; text-transform:uppercase; color:#66666b; white-space:nowrap; }
+.f-cuotas-aclara { font-size:19px; color:#66666b; text-align:right; }
+.f-cuotas { display:grid; gap:16px; }
+.f-cuotas--2 { grid-template-columns:1fr 1fr; gap:24px; }
+.f-cuotas--3, .f-cuotas--4 { grid-template-columns:repeat(3, 1fr); }
+.f-cuota { border:2px solid #e3e7e8; border-radius:22px; padding:22px 24px; display:flex; flex-direction:column; justify-content:space-between; gap:10px; }
+.f-cuotas--2 .f-cuota { padding:24px 34px; }
+.f-cuota-a { display:flex; flex-direction:column; gap:2px; }
+.f-cuota-b { display:flex; flex-direction:column; gap:4px; }
+.f-cuota-label { font-size:19px; font-weight:700; letter-spacing:0.08em; text-transform:uppercase; color:#0f6e7a; }
+.f-cuota-valor { font-size:42px; font-weight:800; letter-spacing:-0.02em; line-height:1.15; white-space:nowrap; }
+.f-cuotas--2 .f-cuota-valor { font-size:50px; }
+.f-cuota-total { font-size:20px; color:#66666b; }
+.f-cuota-nota { font-size:18px; color:#97979b; }
+.f-cuota-mp { font-size:18px; font-weight:700; color:#323232; line-height:1.25; }
+.f-cuota-mp span { display:block; }
+/* Promo tarjeta Mercado Pago: recuadro destacado */
+.f-cuota--mp { background:#eaf8fa; border-color:#3ebbce; }
+/* Con 18 cuotas activas: la promo va arriba a lo ancho y las otras tres abajo */
+.f-cuotas--4.f-cuotas--conmp .f-cuota--mp { grid-column:1 / -1; flex-direction:row; align-items:center; padding:18px 30px; }
+.f-cuotas--4.f-cuotas--conmp .f-cuota--mp .f-cuota-b { align-items:flex-end; text-align:right; }
+.f-cuotas--4.f-cuotas--conmp .f-cuota-mp span { display:inline; }
+.f-cuotas--4.f-cuotas--conmp .f-cuota-mp span + span::before { content:"· "; }
 
 /* Qué incluye */
-.f-incluye { padding:44px 88px 0; display:flex; flex-direction:column; }
+.f-incluye { padding:32px 88px 0; display:flex; flex-direction:column; }
 .f-incluye-label { font-size:22px; font-weight:700; letter-spacing:0.12em; text-transform:uppercase; color:#66666b; margin-bottom:8px; }
-.f-fila { display:grid; grid-template-columns:200px 1fr; gap:16px; align-items:baseline; padding:14px 0; border-bottom:1px solid #e3e7e8; font-size:26px; }
+.f-fila { display:grid; grid-template-columns:200px 1fr; gap:16px; align-items:baseline; padding:11px 0; border-bottom:1px solid #e3e7e8; font-size:26px; }
 .f-fila:last-child { border-bottom:none; }
 .f-fila-cant { font-weight:800; }
 .f-fila-cant--marca { color:#0f6e7a; }
@@ -264,7 +284,7 @@ button {
 .f-gris { color:#66666b; }
 
 /* Pie */
-.f-pie { padding:36px 88px 28px; display:flex; justify-content:space-between; align-items:flex-end; gap:32px; font-size:23px; color:#66666b; }
+.f-pie { padding:28px 88px 26px; display:flex; justify-content:space-between; align-items:flex-end; gap:32px; font-size:23px; color:#66666b; }
 .f-pie-col { display:flex; flex-direction:column; gap:4px; }
 .f-pie-col--der { text-align:right; }
 .f-fuerte { font-weight:700; color:#323232; }
@@ -433,8 +453,6 @@ function calc(){
   const montoEnvio = parseFloat(document.getElementById("montoEnvio").value) || 0;
   const incluirEnvio = document.getElementById("incluirEnvio").checked && montoEnvio > 0;
   const envioT = incluirEnvio ? montoEnvio : 0;
-  const envioC = incluirEnvio ? precioCuotas(montoEnvio, PRECIOS.financiero.cuotas3) : 0;
-  const envioD = incluirEnvio ? precioCuotas(montoEnvio, PRECIOS.financiero.cuotas12) : 0;
 
   const tipoDescuento = document.getElementById("tipoDescuento").value;
   const valorDescuentoInput = parseFloat(document.getElementById("valorDescuento").value) || 0;
@@ -447,34 +465,46 @@ function calc(){
 
   const color = colorKey ? COLORES[colorKey] : null;
 
-  // 💎 Venecitas (precio por m²)
-  const venT = m2*PRECIOS.consumidorFinal.venecita;   // Transferencia
-  const venC = m2*precioCuotas(PRECIOS.consumidorFinal.venecita, PRECIOS.financiero.cuotas3);   // 3 cuotas
-  const venD = m2*precioCuotas(PRECIOS.consumidorFinal.venecita, PRECIOS.financiero.cuotas12);  // 12 cuotas
-
-  // 🛠 Materiales
+  // 🛠 Materiales (cantidades)
   const cem = soloVenecitas ? 0 : Math.ceil(m2/PRECIOS.rendimientos.cemenpoxM2PorBolsa);
   const jun = soloVenecitas ? 0 : Math.ceil(m2/PRECIOS.rendimientos.cementoBlancoM2PorBolsa);
 
+  // 💰 Total por transferencia
+  const venT = m2*PRECIOS.consumidorFinal.venecita;
   const matT = soloVenecitas ? 0 : (cem*PRECIOS.consumidorFinal.cemenpox + jun*PRECIOS.consumidorFinal.cementoBlanco);
-  const matC = soloVenecitas ? 0 : (cem*precioCuotas(PRECIOS.consumidorFinal.cemenpox, PRECIOS.financiero.cuotas3) + jun*precioCuotas(PRECIOS.consumidorFinal.cementoBlanco, PRECIOS.financiero.cuotas3));
-  const matD = soloVenecitas ? 0 : (cem*precioCuotas(PRECIOS.consumidorFinal.cemenpox, PRECIOS.financiero.cuotas12) + jun*precioCuotas(PRECIOS.consumidorFinal.cementoBlanco, PRECIOS.financiero.cuotas12));
-
-  // 💰 Totales
   const totT = venT + matT + envioT;
-  const totC = venC + matC + envioC;
-  const totD = venD + matD + envioD;
-
   const descT = calcDescuento(totT);
-  const descC = calcDescuento(totC);
-  const descD = calcDescuento(totD);
-
   const totTfinal = totT - descT;
+
+  // 💳 Opciones en cuotas. Los recargos se cambian en precios.js.
+  const fin = PRECIOS.financiero;
+  const planesTarjeta = [
+    { id:"c3", cuotas:3, recargo:fin.recargo3 },
+    { id:"c12", cuotas:12, recargo:fin.recargo12 }
+  ];
+  if(fin.recargo18 !== null && fin.recargo18 !== undefined) planesTarjeta.push({ id:"c18", cuotas:18, recargo:fin.recargo18 });
+
+  function totalConRecargo(recargo){
+    const ven = m2*precioCuotas(PRECIOS.consumidorFinal.venecita, recargo);
+    const mat = soloVenecitas ? 0 : (cem*precioCuotas(PRECIOS.consumidorFinal.cemenpox, recargo) + jun*precioCuotas(PRECIOS.consumidorFinal.cementoBlanco, recargo));
+    const env = incluirEnvio ? precioCuotas(montoEnvio, recargo) : 0;
+    return ven + mat + env;
+  }
+
   // La cuota se redondea y el total sale de cuota × cantidad, así siempre cierra.
-  const cuota3 = Math.round((totC - descC)/3);
-  const cuota12 = Math.round((totD - descD)/12);
-  const totCfinal = cuota3*3;
-  const totDfinal = cuota12*12;
+  planesTarjeta.forEach(p => {
+    const tot = totalConRecargo(p.recargo);
+    p.cuota = Math.round((tot - calcDescuento(tot))/p.cuotas);
+    p.total = p.cuota*p.cuotas;
+  });
+
+  // Tarjeta de crédito Mercado Pago pagando con QR: mismo precio que por transferencia.
+  // La promo pide un monto mínimo: si no llega, no se muestra.
+  const promo = fin.promoTarjetaMP;
+  const planMP = (promo && promo.activa && totTfinal >= promo.montoMinimo)
+    ? { id:"mp", cuotas:promo.cuotas, cuota:Math.round(totTfinal/promo.cuotas), total:totTfinal }
+    : null;
+  const opcionesCuotas = planMP ? [planMP, ...planesTarjeta] : planesTarjeta;
 
   // 📅 Fechas
   const hoy = new Date();
@@ -557,16 +587,25 @@ function calc(){
       <div class="f-total-nota">${notaTotal}</div>
     </div>
 
-    <div class="f-cuotas">
-      <div class="f-cuota">
-        <div class="f-cuota-label">3 cuotas de</div>
-        <div class="f-cuota-valor">$${f(cuota3)}</div>
-        <div class="f-cuota-total">Total $${f(totCfinal)}</div>
+    <div class="f-cuotas-bloque">
+      <div class="f-cuotas-head">
+        <div class="f-cuotas-titulo">Opciones en cuotas</div>
+        <div class="f-cuotas-aclara">Tarjetas de crédito, salvo American Express</div>
       </div>
-      <div class="f-cuota">
-        <div class="f-cuota-label">12 cuotas de</div>
-        <div class="f-cuota-valor">$${f(cuota12)}</div>
-        <div class="f-cuota-total">Total $${f(totDfinal)}</div>
+      <div class="f-cuotas f-cuotas--${opcionesCuotas.length}${planMP ? " f-cuotas--conmp" : ""}">
+        ${opcionesCuotas.map(p => `
+        <div class="f-cuota${p.id === "mp" ? " f-cuota--mp" : ""}">
+          <div class="f-cuota-a">
+            <div class="f-cuota-label">${p.id === "mp" ? `${p.cuotas} sin interés de` : `${p.cuotas} cuotas de`}</div>
+            <div class="f-cuota-valor">$${f(p.cuota)}</div>
+          </div>
+          <div class="f-cuota-b">
+            <div class="f-cuota-total">${p.id === "mp" ? "Mismo precio que transferencia" : `Total $${f(p.total)}`}</div>
+            ${p.id === "mp"
+              ? `<div class="f-cuota-mp"><span>Tarjeta Mercado Pago</span> <span>pagando con QR</span></div>`
+              : `<div class="f-cuota-nota">Cualquier tarjeta</div>`}
+          </div>
+        </div>`).join("")}
       </div>
     </div>
 
@@ -607,8 +646,8 @@ Tu pileta: *${m2} m²* · ${color ? color.nombre : "color a definir"}
 
 *Total por transferencia: $${f(totTfinal)}*
 ${aplicaDescuento ? `~$${f(totT)}~ ${etiquetaOff} · ahorrás $${f(descT)}\n` : ""}
-3 cuotas de $${f(cuota3)} (total $${f(totCfinal)})
-12 cuotas de $${f(cuota12)} (total $${f(totDfinal)})
+*Opciones en cuotas*
+${planMP ? `• *${planMP.cuotas} cuotas sin interés de $${f(planMP.cuota)}* con tarjeta de crédito Mercado Pago, pagando con QR (mismo precio que por transferencia)\n` : ""}${planesTarjeta.map(p => `• ${p.cuotas} cuotas de $${f(p.cuota)} con cualquier tarjeta (total $${f(p.total)})`).join("\n")}
 
 *Qué incluye*
 ${lineasIncluye.join("\n")}
